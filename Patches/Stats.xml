@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+
+<!--<Operation Class="PatchOperationAdd">
+		<xpath>PATH GOES HERE</xpath>
+		<value>
+			CODE FOR PATCH GOES HERE
+		</value>
+	</Operation> -->
+
+<!--<Operation Class="PatchOperationInsert">
+		<xpath>PATH GOES HERE</xpath>
+		<value>
+			CODE FOR PATCH GOES HERE
+		</value>
+	</Operation> -->
+
+<!--<Operation Class="PatchOperationRemove">
+		<xpath>PATH GOES HERE</xpath>
+		<value>
+			CODE FOR PATCH GOES HERE
+		</value>
+	</Operation> -->
+
+<!--<Operation Class="PatchOperationReplace">
+		<xpath>PATH GOES HERE</xpath>
+		<value>
+			CODE FOR PATCH GOES HERE
+		</value>
+	</Operation> -->
+
+<!-- ========== General ========== -->
+
+</Patch>
