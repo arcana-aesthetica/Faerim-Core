@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <StatDef>
+    <defName>PawnTotalArmorClass</defName>
+    <label>pawn total armor class</label>
+    <description>A pawns current total armor class after all calculations.</description>
+    <category>PawnCombat</category>
+    <defaultBaseValue>10</defaultBaseValue>
+    <minValue>0</minValue>
+    <displayPriorityInCategory>4048</displayPriorityInCategory>
+  </StatDef>
+
+</Defs>
