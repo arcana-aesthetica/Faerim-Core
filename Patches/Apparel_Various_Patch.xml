@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Patch>
+
+    <Operation Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="Apparel_PlateArmor"]</xpath>
+        <value>
+            <comps>
+                <li Class="Faerim_Core.Faerim_ArmorTypeProps">
+					<ArmorClassMod>3</ArmorClassMod>
+					<ArmorType>Medium</ArmorType>
+				</li>
+            </comps>
+        </value>
+    </Operation>
+
+</Patch>
