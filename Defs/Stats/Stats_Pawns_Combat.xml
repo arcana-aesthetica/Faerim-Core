@@ -2,13 +2,22 @@
 <Defs>
 
   <StatDef>
-    <defName>PawnTotalArmorClass</defName>
-    <label>pawn total armor class</label>
+    <defName>Faerim_PawnCurrentArmorClass</defName>
+    <label>Armor Class</label>
     <description>A pawns current total armor class after all calculations.</description>
     <category>PawnCombat</category>
     <defaultBaseValue>10</defaultBaseValue>
     <minValue>0</minValue>
-    <displayPriorityInCategory>4048</displayPriorityInCategory>
+  </StatDef>
+
+  <StatDef>
+    <defName>Faerim_PawnBaseArmorClass</defName>
+    <label>Base Armor Class</label>
+    <description>A pawns base armor class.</description>
+    <category>PawnCombat</category>
+    <defaultBaseValue>10</defaultBaseValue>
+    <showOnPawns>false</showOnPawns>
+    <minValue>0</minValue>
   </StatDef>
 
 </Defs>
