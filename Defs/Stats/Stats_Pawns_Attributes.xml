@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Defs>
+  <StatDef>
+    <defName>Faerim_Strength</defName>
+    <label>strength</label>
+    <description>A measure of the pawn's physical power.</description>
+    <category>BasicsPawn</category>
+    <alwaysHide>false</alwaysHide>
+    <showOnPawns>true</showOnPawns>
+    <defaultBaseValue>0</defaultBaseValue>
+  </StatDef>
+
+  <StatDef>
+    <defName>Faerim_Dexterity</defName>
+    <label>dexterity</label>
+    <description>A measure of the pawn's agility and coordination.</description>
+    <category>BasicsPawn</category>
+    <alwaysHide>false</alwaysHide>
+    <showOnPawns>true</showOnPawns>
+    <defaultBaseValue>0</defaultBaseValue>
+  </StatDef>
+
+  <StatDef>
+    <defName>Faerim_Constitution</defName>
+    <label>constitution</label>
+    <description>A measure of the pawn's endurance and health.</description>
+    <category>BasicsPawn</category>
+    <alwaysHide>false</alwaysHide>
+    <showOnPawns>true</showOnPawns>
+    <defaultBaseValue>0</defaultBaseValue>
+  </StatDef>
+
+  <StatDef>
+    <defName>Faerim_Wisdom</defName>
+    <label>wisdom</label>
+    <description>A measure of the pawn's insight and decision-making ability.</description>
+    <category>BasicsPawn</category>
+    <alwaysHide>false</alwaysHide>
+    <showOnPawns>true</showOnPawns>
+    <defaultBaseValue>0</defaultBaseValue>
+  </StatDef>
+
+  <StatDef>
+    <defName>Faerim_Intelligence</defName>
+    <label>intelligence</label>
+    <description>A measure of the pawn's ability to learn and process information.</description>
+    <category>BasicsPawn</category>
+    <alwaysHide>false</alwaysHide>
+    <showOnPawns>true</showOnPawns>
+    <defaultBaseValue>0</defaultBaseValue>
+  </StatDef>
+
+  <StatDef>
+    <defName>Faerim_Charisma</defName>
+    <label>charisma</label>
+    <description>A measure of the pawn's ability to interact and influence others.</description>
+    <category>BasicsPawn</category>
+    <alwaysHide>false</alwaysHide>
+    <showOnPawns>true</showOnPawns>
+    <defaultBaseValue>0</defaultBaseValue>
+  </StatDef>
+</Defs>
