@@ -8,7 +8,7 @@
             <comps>
                 <li Class="Faerim_Core.Faerim_ArmorTypeProps">
 					<ArmorClassMod>3</ArmorClassMod>
-					<ArmorType>Medium</ArmorType>
+					<ArmorType>Heavy</ArmorType>
 				</li>
             </comps>
         </value>
