@@ -77,7 +77,6 @@ Thunder
 		<label>rend</label>
 		<description>Severe cuts from large claws, scythes, or great weapons.</description>
 		<armorCategory>Sharp</armorCategory>
-		<impactSoundType>Metal</impactSoundType>
 		<workerClass>DamageWorker_AddInjury</workerClass>
 	</DamageDef>
 
@@ -87,7 +86,6 @@ Thunder
 		<label>corrosion</label>
 		<description>Damage caused by acidic or corrosive substances, capable of dissolving armor, materials, and even living tissue.</description>
 		<armorCategory>Heat</armorCategory>
-		<impactSoundType>Metal</impactSoundType>
 		<workerClass>DamageWorker_AddInjury</workerClass>
 	</DamageDef>
 
@@ -97,7 +95,6 @@ Thunder
 		<label>ice stab</label>
 		<description>Stabbing damage caused by ice attacks.</description>
 		<armorCategory>Sharp</armorCategory>
-		<impactSoundType>Metal</impactSoundType>
 		<workerClass>DamageWorker_AddInjury</workerClass>
 	</DamageDef>
 	<DamageDef>
@@ -105,7 +102,6 @@ Thunder
 		<label>ice blunt</label>
 		<description>Blunt damage caused by ice attacks.</description>
 		<armorCategory>Blunt</armorCategory>
-		<impactSoundType>Metal</impactSoundType>
 		<workerClass>DamageWorker_AddInjury</workerClass>
 	</DamageDef>
 
@@ -115,7 +111,6 @@ Thunder
 		<label>blast</label>
 		<description>Arcane explosive damage caused by raw magic energy.</description>
 		<armorCategory>Blunt</armorCategory>
-		<impactSoundType>Explosion</impactSoundType>
 		<workerClass>DamageWorker_AddInjury</workerClass>
 	</DamageDef>
 	<DamageDef>
@@ -123,15 +118,12 @@ Thunder
 		<label>force blunt</label>
 		<description>Blunt force damage caused by arcane attacks.</description>
 		<armorCategory>Blunt</armorCategory>
-		<impactSoundType>Explosion</impactSoundType>
 		<workerClass>DamageWorker_AddInjury</workerClass>
 	</DamageDef>
 	<DamageDef>
 		<defName>ForceBurn</defName>
 		<label>force burn</label>
 		<description>Burn damage caused by raw arcane energy.</description>
-		<armorCategory>Heat</armorCategory>
-		<impactSoundType>Explosion</impactSoundType>
 		<workerClass>DamageWorker_AddInjury</workerClass>
 	</DamageDef>
 
@@ -141,7 +133,6 @@ Thunder
 		<label>shock</label>
 		<description>Electrical shock damage that can cause stuns.</description>
 		<armorCategory>Heat</armorCategory>
-		<impactSoundType>Electric</impactSoundType>
 		<workerClass>DamageWorker_AddInjury</workerClass>
 	</DamageDef>
 	<DamageDef>
@@ -149,7 +140,6 @@ Thunder
 		<label>electric burn</label>
 		<description>Burn damage caused by electrical attacks.</description>
 		<armorCategory>Heat</armorCategory>
-		<impactSoundType>Electric</impactSoundType>
 		<workerClass>DamageWorker_AddInjury</workerClass>
 	</DamageDef>
 
@@ -159,7 +149,6 @@ Thunder
 		<label>decay</label>
 		<description>Damage caused by necrotic or rotting effects.</description>
 		<armorCategory>Sharp</armorCategory>
-		<impactSoundType>Flesh</impactSoundType>
 		<workerClass>DamageWorker_AddInjury</workerClass>
 	</DamageDef>
 	<DamageDef>
@@ -167,7 +156,6 @@ Thunder
 		<label>drain</label>
 		<description>Life essence draining damage caused by necrotic magic.</description>
 		<armorCategory>Blunt</armorCategory>
-		<impactSoundType>None</impactSoundType>
 		<workerClass>DamageWorker_AddInjury</workerClass>
 	</DamageDef>
 
@@ -177,7 +165,6 @@ Thunder
 		<label>venom</label>
 		<description>Fast-acting damage from venomous creatures or coated weapons, with potential DoT.</description>
 		<armorCategory>Heat</armorCategory>
-		<impactSoundType>Flesh</impactSoundType>
 		<workerClass>DamageWorker_AddInjury</workerClass>
 	</DamageDef>
 	<DamageDef>
@@ -185,7 +172,6 @@ Thunder
 		<label>toxin</label>
 		<description>Damage caused by consuming poisonous substances.</description>
 		<armorCategory>Heat</armorCategory>
-		<impactSoundType>Flesh</impactSoundType>
 		<workerClass>DamageWorker_AddInjury</workerClass>
 	</DamageDef>
 
@@ -195,7 +181,6 @@ Thunder
 		<label>mind burn</label>
 		<description>Severe pain and brain damage caused by psychic overload.</description>
 		<armorCategory>Blunt</armorCategory>
-		<impactSoundType>None</impactSoundType>
 		<workerClass>DamageWorker_AddInjury</workerClass>
 	</DamageDef>
 	<DamageDef>
@@ -203,7 +188,6 @@ Thunder
 		<label>traumatize</label>
 		<description>Psychic attacks that destabilize a pawn's mental state, causing mood debuffs or insanity.</description>
 		<armorCategory>Blunt</armorCategory>
-		<impactSoundType>None</impactSoundType>
 		<workerClass>DamageWorker_AddInjury</workerClass>
 	</DamageDef>
 
@@ -213,7 +197,6 @@ Thunder
 		<label>light burn</label>
 		<description>Burn damage caused by radiant energy, with potential to blind temporarily.</description>
 		<armorCategory>Heat</armorCategory>
-		<impactSoundType>Explosion</impactSoundType>
 		<workerClass>DamageWorker_AddInjury</workerClass>
 	</DamageDef>
 
@@ -223,7 +206,6 @@ Thunder
 		<label>sonic boom</label>
 		<description>General thunder damage caused by extreme sound waves or forceful strikes.</description>
 		<armorCategory>Blunt</armorCategory>
-		<impactSoundType>Explosion</impactSoundType>
 		<workerClass>DamageWorker_AddInjury</workerClass>
 	</DamageDef>
 	<DamageDef>
@@ -231,7 +213,6 @@ Thunder
 		<label>shockwave</label>
 		<description>Explosive damage caused by thunderous force.</description>
 		<armorCategory>Blunt</armorCategory>
-		<impactSoundType>Explosion</impactSoundType>
 		<workerClass>DamageWorker_AddInjury</workerClass>
 	</DamageDef>
 </Defs>
