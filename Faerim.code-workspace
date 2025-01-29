@@ -1,15 +1,16 @@
 {
 	"folders": [
 		{
-			"name": "Faerim-Core",
-			"path": "."
+			"path": "C:/Program Files (x86)/Steam/steamapps/common/RimWorld/Mods/Faerim-Core"
 		},
 		{
-			"name": "2890901044",
-			"path": "../../../../../../workshop/content/294100/2890901044"
+			"path": "C:/Program Files (x86)/Steam/steamapps/common/RimWorld/Data"
 		},
 		{
-			"path": "../../Data"
+			"path": "C:/Program Files (x86)/Steam/steamapps/workshop/content/294100/2890901044"
+		},
+		{
+			"path": "C:/Program Files (x86)/Steam/steamapps/workshop/content/294100/1995668415"
 		}
 	],
 	"settings": {}

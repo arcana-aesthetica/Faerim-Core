@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- 
+
+#####|DAMAGE TYPES AND THEIR DEFS|#####
+
+Slashing
+	Cut - General slashing strikes. (V)
+	Scratch - Claws from animals or pawns. (V)
+
+	Rend - Severe cuts from large claws, scythes, great weapons. (WIP)
+
+Piercing
+	Stab - General piercing stikes. (V)
+	Bite - Biting from an animal or pawn. (V)
+	Bullet - Damage caused by guns. (V)
+	Arrow - Damage caused by bows. (V)
+
+Bludgeoning
+	Blunt - General blunt strikes. (V)
+	Poke - Getting jabbed by something blunt. (V)
+	Crush - Crushed from falling debris etc. (V)
+
+Acid
+	Corrosion - General acid attacks chance to cause damage over time and damage gear. (WIP)
+
+
+Cold
+	Frostbite - Extreme cold. (V)
+
+	IceStab - Stabs caused by ice attacks. (WIP)
+	IceBlunt - Blunts caused by ice attacks. (WIP)
+
+Fire
+	Burn - Burned by an attack. (V)
+	Flame - Burned by fire in the environment. (V)
+	Explosion - Explosives. (V)
+	Heat - Damage from extreme environmental heat. (V)
+
+Force
+	Blast - Arcane explosive damage. (WIP)
+	ForceBlunt - Blunts caused by arcane attacks. (WIP)
+	ForceBurn - Burns caused by arcane attacks. (WIP)
+
+
+Lightning
+	Shock - General lightning damage can cause stun. (WIP)
+	ElectricBurn - Burns caused by lightning damage. (WIP)
+
+Necrotic
+	Decay - Rotting or necrotic flesh damage. (WIP)
+	Drain - Life essence draining. (WIP)
+
+
+Poison
+	Venom - Fast acting damage from animals or coated weapons and can cause a DoT. (WIP)
+	Toxin - Damage from eating a poisonous substance. (WIP)
+
+Psychic
+	MindBurn - Severe pain in the brain can cause brain damage. (WIP)
+	Traumatize - Attacking the pawn's or animal's mood directly can cause negative thoughts. (WIP)
+
+Radiant
+	LightBurn - Burns caused by radiant damage, can cause temporary blindness. (WIP)
+
+Thunder
+	SonicBoom - General thunder damage from attacks. (WIP)
+	Shockwave - Explosive thunder damage. (WIP)
+
+
+-->
+
+<Defs>
+	<!-- Slashing -->
+	<DamageDef>
+		<defName>Rend</defName>
+		<label>rend</label>
+		<description>Severe cuts from large claws, scythes, or great weapons.</description>
+		<armorCategory>Sharp</armorCategory>
+		<impactSoundType>Metal</impactSoundType>
+		<workerClass>DamageWorker_AddInjury</workerClass>
+	</DamageDef>
+
+	<!-- Acid -->
+	<DamageDef>
+		<defName>Corrosion</defName>
+		<label>corrosion</label>
+		<description>Damage caused by acidic or corrosive substances, capable of dissolving armor, materials, and even living tissue.</description>
+		<armorCategory>Heat</armorCategory>
+		<impactSoundType>Metal</impactSoundType>
+		<workerClass>DamageWorker_AddInjury</workerClass>
+	</DamageDef>
+
+	<!-- Cold -->
+	<DamageDef>
+		<defName>IceStab</defName>
+		<label>ice stab</label>
+		<description>Stabbing damage caused by ice attacks.</description>
+		<armorCategory>Sharp</armorCategory>
+		<impactSoundType>Metal</impactSoundType>
+		<workerClass>DamageWorker_AddInjury</workerClass>
+	</DamageDef>
+	<DamageDef>
+		<defName>IceBlunt</defName>
+		<label>ice blunt</label>
+		<description>Blunt damage caused by ice attacks.</description>
+		<armorCategory>Blunt</armorCategory>
+		<impactSoundType>Metal</impactSoundType>
+		<workerClass>DamageWorker_AddInjury</workerClass>
+	</DamageDef>
+
+	<!-- Force -->
+	<DamageDef>
+		<defName>Blast</defName>
+		<label>blast</label>
+		<description>Arcane explosive damage caused by raw magic energy.</description>
+		<armorCategory>Blunt</armorCategory>
+		<impactSoundType>Explosion</impactSoundType>
+		<workerClass>DamageWorker_AddInjury</workerClass>
+	</DamageDef>
+	<DamageDef>
+		<defName>ForceBlunt</defName>
+		<label>force blunt</label>
+		<description>Blunt force damage caused by arcane attacks.</description>
+		<armorCategory>Blunt</armorCategory>
+		<impactSoundType>Explosion</impactSoundType>
+		<workerClass>DamageWorker_AddInjury</workerClass>
+	</DamageDef>
+	<DamageDef>
+		<defName>ForceBurn</defName>
+		<label>force burn</label>
+		<description>Burn damage caused by raw arcane energy.</description>
+		<armorCategory>Heat</armorCategory>
+		<impactSoundType>Explosion</impactSoundType>
+		<workerClass>DamageWorker_AddInjury</workerClass>
+	</DamageDef>
+
+	<!-- Lightning -->
+	<DamageDef>
+		<defName>Shock</defName>
+		<label>shock</label>
+		<description>Electrical shock damage that can cause stuns.</description>
+		<armorCategory>Heat</armorCategory>
+		<impactSoundType>Electric</impactSoundType>
+		<workerClass>DamageWorker_AddInjury</workerClass>
+	</DamageDef>
+	<DamageDef>
+		<defName>ElectricBurn</defName>
+		<label>electric burn</label>
+		<description>Burn damage caused by electrical attacks.</description>
+		<armorCategory>Heat</armorCategory>
+		<impactSoundType>Electric</impactSoundType>
+		<workerClass>DamageWorker_AddInjury</workerClass>
+	</DamageDef>
+
+	<!-- Necrotic -->
+	<DamageDef>
+		<defName>Decay</defName>
+		<label>decay</label>
+		<description>Damage caused by necrotic or rotting effects.</description>
+		<armorCategory>Sharp</armorCategory>
+		<impactSoundType>Flesh</impactSoundType>
+		<workerClass>DamageWorker_AddInjury</workerClass>
+	</DamageDef>
+	<DamageDef>
+		<defName>Drain</defName>
+		<label>drain</label>
+		<description>Life essence draining damage caused by necrotic magic.</description>
+		<armorCategory>Blunt</armorCategory>
+		<impactSoundType>None</impactSoundType>
+		<workerClass>DamageWorker_AddInjury</workerClass>
+	</DamageDef>
+
+	<!-- Poison -->
+	<DamageDef>
+		<defName>Venom</defName>
+		<label>venom</label>
+		<description>Fast-acting damage from venomous creatures or coated weapons, with potential DoT.</description>
+		<armorCategory>Heat</armorCategory>
+		<impactSoundType>Flesh</impactSoundType>
+		<workerClass>DamageWorker_AddInjury</workerClass>
+	</DamageDef>
+	<DamageDef>
+		<defName>Toxin</defName>
+		<label>toxin</label>
+		<description>Damage caused by consuming poisonous substances.</description>
+		<armorCategory>Heat</armorCategory>
+		<impactSoundType>Flesh</impactSoundType>
+		<workerClass>DamageWorker_AddInjury</workerClass>
+	</DamageDef>
+
+	<!-- Psychic -->
+	<DamageDef>
+		<defName>MindBurn</defName>
+		<label>mind burn</label>
+		<description>Severe pain and brain damage caused by psychic overload.</description>
+		<armorCategory>Blunt</armorCategory>
+		<impactSoundType>None</impactSoundType>
+		<workerClass>DamageWorker_AddInjury</workerClass>
+	</DamageDef>
+	<DamageDef>
+		<defName>Traumatize</defName>
+		<label>traumatize</label>
+		<description>Psychic attacks that destabilize a pawn's mental state, causing mood debuffs or insanity.</description>
+		<armorCategory>Blunt</armorCategory>
+		<impactSoundType>None</impactSoundType>
+		<workerClass>DamageWorker_AddInjury</workerClass>
+	</DamageDef>
+
+	<!-- Radiant -->
+	<DamageDef>
+		<defName>LightBurn</defName>
+		<label>light burn</label>
+		<description>Burn damage caused by radiant energy, with potential to blind temporarily.</description>
+		<armorCategory>Heat</armorCategory>
+		<impactSoundType>Explosion</impactSoundType>
+		<workerClass>DamageWorker_AddInjury</workerClass>
+	</DamageDef>
+
+	<!-- Thunder -->
+	<DamageDef>
+		<defName>SonicBoom</defName>
+		<label>sonic boom</label>
+		<description>General thunder damage caused by extreme sound waves or forceful strikes.</description>
+		<armorCategory>Blunt</armorCategory>
+		<impactSoundType>Explosion</impactSoundType>
+		<workerClass>DamageWorker_AddInjury</workerClass>
+	</DamageDef>
+	<DamageDef>
+		<defName>Shockwave</defName>
+		<label>shockwave</label>
+		<description>Explosive damage caused by thunderous force.</description>
+		<armorCategory>Blunt</armorCategory>
+		<impactSoundType>Explosion</impactSoundType>
+		<workerClass>DamageWorker_AddInjury</workerClass>
+	</DamageDef>
+</Defs>

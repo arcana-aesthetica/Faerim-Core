@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Patch>
+
+    <Operation Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="Bow_Short"]</xpath>
+        <value>
+            <comps>
+                <li Class="Faerim_Core.Faerim_DamageDiceProps">
+					<dice_num>1</dice_num>
+					<dice_val>6</dice_val>
+				</li>
+            </comps>
+        </value>
+    </Operation>
+
+</Patch>

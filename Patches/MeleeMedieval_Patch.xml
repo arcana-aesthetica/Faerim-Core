@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Patch>
+
+    <Operation Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="MeleeWeapon_LongSword"]</xpath>
+        <value>
+            <comps>
+                <li Class="Faerim_Core.Faerim_DamageDiceProps">
+					<dice_num>1</dice_num>
+					<dice_val>8</dice_val>
+				</li>
+            </comps>
+        </value>
+    </Operation>
+
+    <Operation Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[defName="MeleeWeapon_LongSword"]/tools</xpath>
+        <value>
+            <tools>
+                <li>
+                    <label>edge</label>
+                    <capacities>
+                    <li>Cut</li>
+                    </capacities>
+                    <power>0</power>
+                    <cooldownTime>2.6</cooldownTime>
+                </li>
+                <li>
+                    <label>point</label>
+                    <capacities>
+                    <li>Stab</li>
+                    </capacities>
+                    <power>0</power>
+                    <cooldownTime>2.6</cooldownTime>
+                </li>
+                <li>
+                    <label>handle</label>
+                    <capacities>
+                    <li>Blunt</li>
+                    </capacities>
+                    <power>0</power>
+                    <cooldownTime>2</cooldownTime>
+                </li>
+            </tools>
+        </value>
+    </Operation>
+
+</Patch>

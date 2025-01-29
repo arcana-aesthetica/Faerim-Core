@@ -12,6 +12,19 @@
   </StatDef>
 
   <StatDef>
+    <defName>Faerim_StrengthMod</defName>
+    <label>strength mod</label>
+    <description>A modifier for dice rolls related to Strength.</description>
+    <category>BasicsPawn</category>
+    <alwaysHide>false</alwaysHide>
+    <showOnPawns>true</showOnPawns>
+    <defaultBaseValue>0</defaultBaseValue>
+    <parts>
+      <li Class="Faerim_Core.StatPart_Modifier" />
+    </parts>
+  </StatDef>
+
+  <StatDef>
     <defName>Faerim_Dexterity</defName>
     <label>dexterity</label>
     <description>A measure of the pawn's agility and coordination.</description>
@@ -19,6 +32,19 @@
     <alwaysHide>false</alwaysHide>
     <showOnPawns>true</showOnPawns>
     <defaultBaseValue>0</defaultBaseValue>
+  </StatDef>
+
+  <StatDef>
+    <defName>Faerim_DexterityMod</defName>
+    <label>dexterity mod</label>
+    <description>A modifier for dice rolls related to Dexterity.</description>
+    <category>BasicsPawn</category>
+    <alwaysHide>false</alwaysHide>
+    <showOnPawns>true</showOnPawns>
+    <defaultBaseValue>0</defaultBaseValue>
+    <parts>
+      <li Class="Faerim_Core.StatPart_Modifier" />
+    </parts>
   </StatDef>
 
   <StatDef>
@@ -32,6 +58,19 @@
   </StatDef>
 
   <StatDef>
+    <defName>Faerim_ConstitutionMod</defName>
+    <label>constitution mod</label>
+    <description>A modifier for dice rolls related to Constitution.</description>
+    <category>BasicsPawn</category>
+    <alwaysHide>false</alwaysHide>
+    <showOnPawns>true</showOnPawns>
+    <defaultBaseValue>0</defaultBaseValue>
+    <parts>
+      <li Class="Faerim_Core.StatPart_Modifier" />
+    </parts>
+  </StatDef>
+
+  <StatDef>
     <defName>Faerim_Wisdom</defName>
     <label>wisdom</label>
     <description>A measure of the pawn's insight and decision-making ability.</description>
@@ -39,6 +78,19 @@
     <alwaysHide>false</alwaysHide>
     <showOnPawns>true</showOnPawns>
     <defaultBaseValue>0</defaultBaseValue>
+  </StatDef>
+
+  <StatDef>
+    <defName>Faerim_WisdomMod</defName>
+    <label>wisdom mod</label>
+    <description>A modifier for dice rolls related to Wisdom.</description>
+    <category>BasicsPawn</category>
+    <alwaysHide>false</alwaysHide>
+    <showOnPawns>true</showOnPawns>
+    <defaultBaseValue>0</defaultBaseValue>
+    <parts>
+      <li Class="Faerim_Core.StatPart_Modifier" />
+    </parts>
   </StatDef>
 
   <StatDef>
@@ -52,6 +104,19 @@
   </StatDef>
 
   <StatDef>
+    <defName>Faerim_IntelligenceMod</defName>
+    <label>intelligence mod</label>
+    <description>A modifier for dice rolls related to Intelligence.</description>
+    <category>BasicsPawn</category>
+    <alwaysHide>false</alwaysHide>
+    <showOnPawns>true</showOnPawns>
+    <defaultBaseValue>0</defaultBaseValue>
+    <parts>
+      <li Class="Faerim_Core.StatPart_Modifier" />
+    </parts>
+  </StatDef>
+
+  <StatDef>
     <defName>Faerim_Charisma</defName>
     <label>charisma</label>
     <description>A measure of the pawn's ability to interact and influence others.</description>
@@ -60,4 +125,18 @@
     <showOnPawns>true</showOnPawns>
     <defaultBaseValue>0</defaultBaseValue>
   </StatDef>
+
+  <StatDef>
+    <defName>Faerim_CharismaMod</defName>
+    <label>charisma mod</label>
+    <description>A modifier for dice rolls related to Charisma.</description>
+    <category>BasicsPawn</category>
+    <alwaysHide>false</alwaysHide>
+    <showOnPawns>true</showOnPawns>
+    <defaultBaseValue>0</defaultBaseValue>
+    <parts>
+      <li Class="Faerim_Core.StatPart_Modifier" />
+    </parts>
+  </StatDef>
+
 </Defs>

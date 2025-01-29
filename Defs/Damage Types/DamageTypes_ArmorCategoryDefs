@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Defs>
+	<!-- Slashing -->
+	<ArmorCategoryDef>
+		<defName>ArmorRating_Slashing</defName>
+		<label>slashing resistance</label>
+		<description>Protects against slashing attacks like cuts, scratches, and rends.</description>
+	</ArmorCategoryDef>
+
+	<!-- Piercing -->
+	<ArmorCategoryDef>
+		<defName>ArmorRating_Piercing</defName>
+		<label>piercing resistance</label>
+		<description>Protects against piercing attacks like stabs, arrows, and bullets.</description>
+	</ArmorCategoryDef>
+
+	<!-- Bludgeoning -->
+	<ArmorCategoryDef>
+		<defName>ArmorRating_Bludgeoning</defName>
+		<label>bludgeoning resistance</label>
+		<description>Protects against blunt impacts and crushing blows.</description>
+	</ArmorCategoryDef>
+
+	<!-- Acid -->
+	<ArmorCategoryDef>
+		<defName>ArmorRating_Acid</defName>
+		<label>acid resistance</label>
+		<description>Protects against acid and corrosive damage.</description>
+	</ArmorCategoryDef>
+
+	<!-- Cold -->
+	<ArmorCategoryDef>
+		<defName>ArmorRating_Cold</defName>
+		<label>cold resistance</label>
+		<description>Protects against freezing and frostbite attacks.</description>
+	</ArmorCategoryDef>
+
+	<!-- Fire -->
+	<ArmorCategoryDef>
+		<defName>ArmorRating_Fire</defName>
+		<label>fire resistance</label>
+		<description>Protects against burns, heat, and flame attacks.</description>
+	</ArmorCategoryDef>
+
+	<!-- Force -->
+	<ArmorCategoryDef>
+		<defName>ArmorRating_Force</defName>
+		<label>force resistance</label>
+		<description>Protects against arcane magical force attacks.</description>
+	</ArmorCategoryDef>
+
+	<!-- Lightning -->
+	<ArmorCategoryDef>
+		<defName>ArmorRating_Lightning</defName>
+		<label>lightning resistance</label>
+		<description>Protects against electrical and lightning attacks.</description>
+	</ArmorCategoryDef>
+
+	<!-- Necrotic -->
+	<ArmorCategoryDef>
+		<defName>ArmorRating_Necrotic</defName>
+		<label>necrotic resistance</label>
+		<description>Protects against decay, rotting, and life-draining attacks.</description>
+	</ArmorCategoryDef>
+
+	<!-- Poison -->
+	<ArmorCategoryDef>
+		<defName>ArmorRating_Poison</defName>
+		<label>poison resistance</label>
+		<description>Protects against venom, toxins, and poison attacks.</description>
+	</ArmorCategoryDef>
+
+	<!-- Psychic -->
+	<ArmorCategoryDef>
+		<defName>ArmorRating_Psychic</defName>
+		<label>psychic resistance</label>
+		<description>Protects against psychic and mental attacks.</description>
+	</ArmorCategoryDef>
+
+	<!-- Radiant -->
+	<ArmorCategoryDef>
+		<defName>ArmorRating_Radiant</defName>
+		<label>radiant resistance</label>
+		<description>Protects against radiant light and searing energy attacks.</description>
+	</ArmorCategoryDef>
+
+	<!-- Thunder -->
+	<ArmorCategoryDef>
+		<defName>ArmorRating_Thunder</defName>
+		<label>thunder resistance</label>
+		<description>Protects against sonic booms and explosive shockwaves.</description>
+	</ArmorCategoryDef>
+</Defs>
