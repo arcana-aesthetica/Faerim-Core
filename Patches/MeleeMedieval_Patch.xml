@@ -6,11 +6,21 @@
         <xpath>/Defs/ThingDef[defName="MeleeWeapon_LongSword"]</xpath>
         <value>
             <comps>
+            
                 <li Class="Faerim_Core.Faerim_DamageDiceProps">
 					<dice_num>1</dice_num>
 					<dice_val>8</dice_val>
 				</li>
+
+                <li Class="Faerim_Core.Faerim_WeaponProps">
+				<weaponProperties>
+					<li>Finesse</li>
+					<li>Magical</li>
+				</weaponProperties>
+			    </li>
+            
             </comps>
+			
         </value>
     </Operation>
 
