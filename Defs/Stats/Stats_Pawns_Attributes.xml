@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <Defs>
+
+  <ThingCompDef>
+      <defName>CompPawnStats</defName>
+      <compClass>Faerim_Core.CompPawnStats</compClass>
+  </ThingCompDef>
+
   <StatDef>
     <defName>Faerim_Strength</defName>
     <label>strength</label>

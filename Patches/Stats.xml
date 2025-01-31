@@ -31,4 +31,13 @@
 
 <!-- ========== General ========== -->
 
+	<Operation Class="PatchOperationAdd">
+		<xpath>/Defs/ThingDef[defName="Human"]/comps</xpath>
+		<value>
+			<li>
+				<compClass>Faerim_Core.CompPawnStats</compClass>
+			</li>
+		</value>
+	</Operation>
+
 </Patch>
