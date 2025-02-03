@@ -7,10 +7,16 @@
         <value>
             <comps>
                 <li Class="Faerim_Core.Faerim_ArmorTypeProps">
-					<ArmorClassMod>3</ArmorClassMod>
 					<ArmorType>Heavy</ArmorType>
 				</li>
             </comps>
+        </value>
+    </Operation>
+
+    <Operation Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="Apparel_PlateArmor"]/equippedStatOffsets</xpath>
+        <value>
+            <Faerim_PawnCurrentArmorClass>2</Faerim_PawnCurrentArmorClass>
         </value>
     </Operation>
 
