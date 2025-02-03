@@ -16,7 +16,7 @@
     <Operation Class="PatchOperationAdd">
         <xpath>/Defs/ThingDef[defName="Apparel_PlateArmor"]/equippedStatOffsets</xpath>
         <value>
-            <Faerim_PawnCurrentArmorClass>2</Faerim_PawnCurrentArmorClass>
+            <Faerim_PawnCurrentArmorClass>8</Faerim_PawnCurrentArmorClass>
         </value>
     </Operation>
 

@@ -8,6 +8,9 @@
     <category>PawnCombat</category>
     <defaultBaseValue>10</defaultBaseValue>
     <minValue>0</minValue>
+    <parts>
+        	<li Class="Faerim_Core.StatPart_AddModToAC" />
+    </parts>
   </StatDef>
 
   <StatDef>
