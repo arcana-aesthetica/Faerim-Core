@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
+  <StatDef>
+    <defName>Faerim_TotalLevel</defName>
+    <label>Level</label>
+    <description>The total of all a pawns class levels.</description>
+    <category>PawnCombat</category>
+    <defaultBaseValue>0</defaultBaseValue>
+    <minValue>0</minValue>
+  </StatDef>
 
   <StatDef>
     <defName>Faerim_PawnCurrentArmorClass</defName>
@@ -26,7 +34,7 @@
   <StatDef>
     <defName>Faerim_ProficiencyBonus</defName>
     <label>Proficiency Bonus</label>
-    <description>A pawns base armor class.</description>
+    <description>A pawns proficiency bonus.</description>
     <category>PawnCombat</category>
     <defaultBaseValue>1</defaultBaseValue>
     <minValue>0</minValue>
