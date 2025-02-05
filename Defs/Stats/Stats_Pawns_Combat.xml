@@ -23,4 +23,12 @@
     <minValue>0</minValue>
   </StatDef>
 
+  <StatDef>
+    <defName>Faerim_ProficiencyBonus</defName>
+    <label>Proficiency Bonus</label>
+    <description>A pawns base armor class.</description>
+    <category>PawnCombat</category>
+    <defaultBaseValue>1</defaultBaseValue>
+    <minValue>0</minValue>
+  </StatDef>
 </Defs>
