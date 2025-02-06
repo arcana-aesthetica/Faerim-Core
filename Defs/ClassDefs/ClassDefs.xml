@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Defs>
+	<!-- Class Category Definition -->
+	<ThingCategoryDef>
+		<defName>Faerim_ClassDefs</defName>
+	</ThingCategoryDef>
+
+	<!-- Base class definition (Abstract, not assigned directly) -->
+	<ThingDef Name="BaseClass" Abstract="true" Class="Faerim_Core.ClassThingDef">
+		<thingClass>Faerim_Core.CompClassSystem</thingClass>
+		<thingCategories>
+			<li>Faerim_ClassDefs</li>
+		</thingCategories>
+	</ThingDef>
+
+	<!-- The "Commoner" class -->
+	<ThingDef ParentName="BaseClass" Class="Faerim_Core.ClassThingDef">
+		<defName>Commoner</defName>
+		<label>Commoner</label> <!-- Change from classLabel to label -->
+		<hitDie>10</hitDie>
+	</ThingDef>
+
+	<!-- Warrior class -->
+	<ThingDef ParentName="BaseClass" Class="Faerim_Core.ClassThingDef">
+		<defName>Warrior</defName>
+		<label>Warrior</label> <!-- Change from classLabel to label -->
+		<hitDie>12</hitDie>
+	</ThingDef>
+
+	<!-- Wizard class -->
+	<ThingDef ParentName="BaseClass" Class="Faerim_Core.ClassThingDef">
+		<defName>Wizard</defName>
+		<label>Wizard</label> <!-- Change from classLabel to label -->
+		<hitDie>6</hitDie>
+	</ThingDef>
+	
+</Defs>
