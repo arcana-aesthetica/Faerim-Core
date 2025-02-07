@@ -26,6 +26,11 @@
 		<defName>Warrior</defName>
 		<label>Warrior</label> <!-- Change from classLabel to label -->
 		<hitDie>12</hitDie>
+		<requiredAttributes>
+			<li>Strength</li>
+			<li>Dexterity</li>
+		</requiredAttributes>
+		<allPrerequisitesRequired>false</allPrerequisitesRequired>
 	</ThingDef>
 
 	<!-- Wizard class -->
@@ -33,6 +38,10 @@
 		<defName>Wizard</defName>
 		<label>Wizard</label> <!-- Change from classLabel to label -->
 		<hitDie>6</hitDie>
+		<requiredAttributes>
+			<li>Intelligence</li>
+		</requiredAttributes>
+		<allPrerequisitesRequired>false</allPrerequisitesRequired>
 	</ThingDef>
-	
+
 </Defs>
