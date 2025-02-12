@@ -104,14 +104,22 @@ namespace Faerim_Core
 	public class CompClassSystem : ThingComp
 	{
 		private Dictionary<string, int> classLevels = new Dictionary<string, int>(); // Stores levels per class
-		private float totalXP = 0f;
+		private int totalXP = 0;
 
 		public override void PostExposeData()
 		{
 			base.PostExposeData();
 			Scribe_Collections.Look(ref classLevels, "classLevels", LookMode.Value, LookMode.Value);
-			Scribe_Values.Look(ref totalXP, "totalXP", 0f);
+			Scribe_Values.Look(ref totalXP, "totalXP", 0);
+
+			// Ensure the dictionary is always initialized and contains at least "Commoner"
+			if (classLevels == null || classLevels.Count == 0)
+			{
+				classLevels = new Dictionary<string, int> { { "Commoner", 0 } };
+				Log.Warning($"[DEBUG] {parent.LabelCap} had no classes on load. Assigned Commoner Lv0.");
+			}
 		}
+
 
 		public override void PostSpawnSetup(bool respawningAfterLoad)
 		{
@@ -237,7 +245,7 @@ namespace Faerim_Core
 		/// <summary>
 		/// Adds XP to the pawn.
 		/// </summary>
-		public void AddXP(float amount)
+		public void AddXP(int amount)
 		{
 			totalXP += amount;
 			Log.Message($"[DEBUG] {parent.LabelCap} gained {amount} XP. Total XP: {totalXP}");
