@@ -40,6 +40,9 @@
 			<li>
 				<compClass>Faerim_Core.CompClassSystem</compClass>
 			</li>
+			<li>
+				<compClass>Faerim_Core.CompFaerimHP</compClass>
+			</li>
 		</value>
 	</Operation>
 

@@ -7,6 +7,9 @@
     <category>PawnCombat</category>
     <defaultBaseValue>0</defaultBaseValue>
     <minValue>0</minValue>
+    <parts>
+        <li Class="Faerim_Core.StatPart_FaerimTotalLevel" />
+    </parts>
   </StatDef>
 
   <StatDef>
@@ -39,5 +42,5 @@
     <defaultBaseValue>1</defaultBaseValue>
     <minValue>0</minValue>
   </StatDef>
-  
+
 </Defs>
