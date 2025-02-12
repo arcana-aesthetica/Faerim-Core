@@ -17,7 +17,7 @@ namespace Faerim_Core
 	{
 		public FaerimMod(ModContentPack content) : base(content)
 		{
-			Log.Message("[DEBUG] Faerim Core Mod Initialized!");
+			Log.Message("[DEBUG] Loading Faerim Core...");
 
 			// Ensure Defs are loaded properly AFTER all mods are initialized
 			LongEventHandler.ExecuteWhenFinished(() =>
@@ -47,17 +47,17 @@ namespace Faerim_Core
 	{
 		static FaerimCore_Init()
 		{
-			Log.Message("[DEBUG] Loading Faerim Core...");
-			Log.Message("Quick test");
-
-			Harmony harmony = new Harmony("Faerim.Core");
-			foreach (var method in Harmony.GetAllPatchedMethods())
+			try
 			{
-				Log.Message($"[Faerim] Patched Method: {method.DeclaringType}.{method.Name}");
+				Harmony harmony = new Harmony("Faerim.Core");
+				harmony.PatchAll();
+				Log.Message("[DEBUG] Harmony patches applied!");
 			}
-			harmony.PatchAll();
+			catch (Exception ex)
+			{
+				Log.Error($"[ERROR] Faerim Core: Harmony patching failed! Exception: {ex}");
+			}
 
-			Log.Message("[DEBUG] Harmony patches applied!");
 			Log.Message("[DEBUG] Faerim Core Fully Loaded!");
 		}
 	}

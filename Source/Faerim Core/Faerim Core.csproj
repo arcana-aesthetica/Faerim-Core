@@ -68,7 +68,6 @@
     <Compile Include="CharacterSheet_UI.cs" />
     <Compile Include="ClassSystem.cs" />
     <Compile Include="DamageHandlers.cs" />
-    <Compile Include="Explosions.cs" />
     <Compile Include="Faerim_Core.cs" />
     <Compile Include="HitpointsUtility.cs" />
     <Compile Include="MeleeAttacks.cs" />
