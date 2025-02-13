@@ -15,22 +15,29 @@ namespace Faerim_Core
 	{
 		public static int ConvertDamageToDiceRoll(float originalDamage, ThingWithComps weapon, Pawn casterPawn, bool isCrit = false)
 		{
+
+			bool hasFinesse = false;
+			float strengthMod = 0;
+			float dexterityMod = 0;
+			float proficiencyBonus = 1;
+			float statBonus = 0;
+
 			// If the damage comes from a pawn's attack, use specialized logic
 			if (casterPawn != null)
 			{
 				// Check for finesse property
-				bool hasFinesse = weapon?.def?.comps?.Any(c => c is Faerim_WeaponProps props && props.weaponProperties.Contains("Finesse")) ?? false;
+				hasFinesse = weapon?.def?.comps?.Any(c => c is Faerim_WeaponProps props && props.weaponProperties.Contains("Finesse")) ?? false;
 
 				// Retrieve modifiers
-				float strengthMod = casterPawn.GetStatValue(DefDatabase<StatDef>.GetNamed("Faerim_StrengthMod"), false);
-				float dexterityMod = casterPawn.GetStatValue(DefDatabase<StatDef>.GetNamed("Faerim_DexterityMod"), false);
-				float proficiencyBonus = casterPawn.GetStatValue(DefDatabase<StatDef>.GetNamed("Faerim_ProficiencyBonus"), false);
+				strengthMod = casterPawn.GetStatValue(DefDatabase<StatDef>.GetNamed("Faerim_StrengthMod"), false);
+				dexterityMod = casterPawn.GetStatValue(DefDatabase<StatDef>.GetNamed("Faerim_DexterityMod"), false);
+				proficiencyBonus = casterPawn.GetStatValue(DefDatabase<StatDef>.GetNamed("Faerim_ProficiencyBonus"), false);
 
 				// **Check if weapon is ranged**
 				bool isRangedWeapon = weapon?.def?.Verbs?.Any(v => v.defaultProjectile != null) ?? false;
 
 				// **Force Dexterity for ranged weapons, else use Finesse logic**
-				float statBonus = isRangedWeapon ? dexterityMod : (hasFinesse ? Mathf.Max(strengthMod, dexterityMod) : strengthMod);
+				statBonus = isRangedWeapon ? dexterityMod : (hasFinesse ? Mathf.Max(strengthMod, dexterityMod) : strengthMod);
 				Log.Message($"[Faerim] Weapon Type: {(isRangedWeapon ? "Ranged (Using DEX)" : "Melee (Using STR or Finesse)")} | StatBonus: {statBonus}");
 
 				// If the weapon has custom dice, use them
@@ -58,10 +65,37 @@ namespace Faerim_Core
 					}
 				}
 
-				// If no custom dice, fall back to standard conversion using base weapon damage
-				float baseDamage = weapon?.def.tools?.FirstOrDefault()?.power ?? originalDamage;
-				Log.Message($"[Faerim] No custom dice. Using base damage: {baseDamage}");
+				float baseDamage = originalDamage;
+
+				if (isRangedWeapon)
+				{
+					// Ensure we always use the projectile's damage for ranged attacks
+					ThingDef projectile = weapon.def.Verbs?
+						.Where(v => v.defaultProjectile != null)
+						.Select(v => v.defaultProjectile)
+						.FirstOrDefault();
+
+					if (projectile != null)
+					{
+						baseDamage = projectile.projectile?.GetDamageAmount(1f) ?? originalDamage;
+						Log.Message($"[Faerim] Ranged attack detected. Using projectile damage: {baseDamage}");
+					}
+					else
+					{
+						Log.Warning($"[Faerim] WARNING: Ranged weapon {weapon.def.label} has no valid projectile! Falling back to default.");
+					}
+				}
+				else
+				{
+					// Use melee tool damage normally
+					baseDamage = weapon?.def.tools?.OrderByDescending(t => t.power).FirstOrDefault()?.power ?? originalDamage;
+					Log.Message($"[Faerim] Melee attack detected. Using highest power tool. Base damage: {baseDamage}");
+				}
+
+				// Ensure Dexterity is used for ranged weapons
+				statBonus = isRangedWeapon ? dexterityMod : (hasFinesse ? Mathf.Max(strengthMod, dexterityMod) : strengthMod);
 				originalDamage = baseDamage;
+
 			}
 
 			// **For non-pawn damage sources (traps, explosions, etc.), still convert to dice**
@@ -111,8 +145,6 @@ namespace Faerim_Core
 			// Apply stat and proficiency bonuses only if a pawn was involved
 			if (casterPawn != null)
 			{
-				float statBonus = casterPawn.GetStatValue(DefDatabase<StatDef>.GetNamed("Faerim_StrengthMod"), false);
-				float proficiencyBonus = casterPawn.GetStatValue(DefDatabase<StatDef>.GetNamed("Faerim_ProficiencyBonus"), false);
 				finalDamage += Mathf.RoundToInt(statBonus + proficiencyBonus);
 				Log.Message($"[Faerim] Final damage after modifiers: {finalDamage}");
 			}
@@ -170,7 +202,7 @@ namespace Faerim_Core
 
 			// Estimate downing injury threshold
 			float lethalThreshold = pawn.health.LethalDamageThreshold;
-			float downingThreshold = lethalThreshold * 0.2f; // 🔹 60% of lethal threshold
+			float downingThreshold = lethalThreshold * 0.2f; 
 
 			// Calculate proportional injury severity
 			float damageScale = downingThreshold / faeMaxHP;
