@@ -202,7 +202,7 @@ namespace Faerim_Core
 
 			// Estimate downing injury threshold
 			float lethalThreshold = pawn.health.LethalDamageThreshold;
-			float downingThreshold = lethalThreshold * 0.2f; 
+			float downingThreshold = lethalThreshold * 0.3f; 
 
 			// Calculate proportional injury severity
 			float damageScale = downingThreshold / faeMaxHP;
