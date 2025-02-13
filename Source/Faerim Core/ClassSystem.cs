@@ -116,7 +116,6 @@ namespace Faerim_Core
 			if (classLevels == null || classLevels.Count == 0)
 			{
 				classLevels = new Dictionary<string, int> { { "Commoner", 0 } };
-				Log.Warning($"[DEBUG] {parent.LabelCap} had no classes on load. Assigned Commoner Lv0.");
 			}
 		}
 
