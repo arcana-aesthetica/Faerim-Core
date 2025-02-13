@@ -32,15 +32,17 @@ namespace Faerim_Core
 		{
 			DefOfHelper.EnsureInitializedInCtor(typeof(DefDatabaseClass));
 
-			// Debug check to ensure all StatDefs exist
-			foreach (var field in typeof(DefDatabaseClass).GetFields(BindingFlags.Public | BindingFlags.Static))
+			// Delay the check until all Defs are loaded
+			LongEventHandler.ExecuteWhenFinished(() =>
 			{
-				if (field.GetValue(null) == null)
+				foreach (var field in typeof(DefDatabaseClass).GetFields(BindingFlags.Public | BindingFlags.Static))
 				{
-					Log.Warning($"[Faerim] WARNING: StatDef '{field.Name}' is missing! Check XML definitions.");
+					if (field.GetValue(null) == null)
+					{
+						Log.Warning($"[Faerim] WARNING: StatDef '{field.Name}' is missing! Check XML definitions.");
+					}
 				}
-			}
+			});
 		}
-
 	}
 }
