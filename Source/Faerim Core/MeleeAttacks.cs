@@ -51,7 +51,13 @@ namespace Faerim_Core
 			// Ensure weapon tool is used if available
 			if (weapon != null && weapon.def.tools != null && weapon.def.tools.Count > 0)
 			{
-				selectedTool = weapon.def.tools[0];
+				// Find the most powerful tool available
+				if (weapon != null && weapon.def.tools != null && weapon.def.tools.Count > 0)
+				{
+					selectedTool = weapon.def.tools.OrderByDescending(t => t.power).FirstOrDefault();
+					Log.Message($"[Faerim] Weapon detected: {weapon.def.label}. Assigned Best Tool: {selectedTool.label} (Power: {selectedTool.power})");
+				}
+
 				Log.Message($"[Faerim] Weapon detected: {weapon.def.label}. Assigned Tool: {selectedTool.label}");
 			}
 
