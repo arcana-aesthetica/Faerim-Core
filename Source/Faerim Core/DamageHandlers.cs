@@ -99,7 +99,7 @@ namespace Faerim_Core
 			}
 
 			// **For non-pawn damage sources (traps, explosions, etc.), still convert to dice**
-			float targetAverage = originalDamage * 0.35f;
+			float targetAverage = originalDamage * 0.30f;
 			int[] validDice = { 4, 6, 8, 10, 12, 20, 100 };
 			int bestDie = 4;
 			int bestNumDice = 1;
@@ -112,7 +112,7 @@ namespace Faerim_Core
 				{
 					for (int numDice = 1; numDice <= 20; numDice++)
 					{
-						float average = (numDice * die / 2f) + 1;
+						float average = numDice * ((die + 1) / 2f);
 						float difference = Math.Abs(average - targetAverage);
 
 						if (difference < bestDifference)
