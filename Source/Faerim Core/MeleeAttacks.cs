@@ -20,7 +20,18 @@ namespace Faerim_Core
 			Log.Message("[Faerim] TryCastShot patch executing...");
 
 			Pawn casterPawn = __instance.CasterPawn;
-			LocalTargetInfo target = Traverse.Create(__instance).Field("currentTarget").GetValue<LocalTargetInfo>();
+
+			LocalTargetInfo target = null;
+			try
+			{
+				target = Traverse.Create(__instance).Field("currentTarget").GetValue<LocalTargetInfo>();
+			}
+			catch (Exception ex)
+			{
+				Log.Error($"[Faerim] ERROR: Failed to access currentTarget via reflection! {ex}");
+				return false;
+			}
+
 
 			// Ensure the caster and target are valid
 			if (casterPawn == null || target.Thing == null)
