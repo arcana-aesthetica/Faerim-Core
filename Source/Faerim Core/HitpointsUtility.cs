@@ -19,7 +19,6 @@ namespace Faerim_Core
 		public override void PostSpawnSetup(bool respawningAfterLoad)
 		{
 			base.PostSpawnSetup(respawningAfterLoad);
-
 			Pawn pawn = this.parent as Pawn;
 			if (pawn == null)
 			{
@@ -27,9 +26,12 @@ namespace Faerim_Core
 				return;
 			}
 
-			// Calculate Faerim Max HP
-			faeMaxHP = FaerimHealthUtility.CalculateMaxHealth(pawn);
-			faeHP = faeMaxHP; // Ensure full health on spawn
+			// Only recalculate HP on new spawn, not on load
+			if (!respawningAfterLoad)
+			{
+				faeMaxHP = FaerimHealthUtility.CalculateMaxHealth(pawn);
+				faeHP = faeMaxHP; // Ensure full health on fresh spawn
+			}
 		}
 
 		public float GetFaeHP() => faeHP;
@@ -37,7 +39,7 @@ namespace Faerim_Core
 
 		public void ModifyFaeHP(float amount)
 		{
-			faeHP = Mathf.Max(faeHP - amount, 0);
+			faeHP = Mathf.Clamp(faeHP - amount, 0, faeMaxHP);
 			if (faeHP <= 0)
 			{
 				Log.Message($"[Faerim] {parent.LabelShort} has reached 0 HP and may be downed.");
