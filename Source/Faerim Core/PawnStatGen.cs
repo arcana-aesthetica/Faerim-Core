@@ -25,7 +25,19 @@ namespace Faerim_Core
 		{
 			return statValues.TryGetValue(statName, out float value) ? value : 0f;
 		}
+
+		// 🔹 **Ensure stats persist between saves**
+		public override void PostExposeData()
+		{
+			base.PostExposeData();
+			Scribe_Collections.Look(ref statValues, "statValues", LookMode.Value, LookMode.Value);
+
+			// Ensure the dictionary is always initialized after loading
+			if (statValues == null)
+				statValues = new Dictionary<string, float>();
+		}
 	}
+
 
 	public class StatPart_Modifier : StatPart
 	{
