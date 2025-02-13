@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using RimWorld;
+using Verse;
 
 namespace Faerim_Core
 {
@@ -29,6 +31,16 @@ namespace Faerim_Core
 		static DefDatabaseClass()
 		{
 			DefOfHelper.EnsureInitializedInCtor(typeof(DefDatabaseClass));
+
+			// Debug check to ensure all StatDefs exist
+			foreach (var field in typeof(DefDatabaseClass).GetFields(BindingFlags.Public | BindingFlags.Static))
+			{
+				if (field.GetValue(null) == null)
+				{
+					Log.Warning($"[Faerim] WARNING: StatDef '{field.Name}' is missing! Check XML definitions.");
+				}
+			}
 		}
+
 	}
 }
