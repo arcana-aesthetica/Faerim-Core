@@ -103,8 +103,11 @@ namespace Faerim_Core
 			float dexterityMod = casterPawn.GetStatValue(DefDatabaseClass.Faerim_DexterityMod, false);
 			float proficiencyBonus = casterPawn.GetStatValue(DefDatabase<StatDef>.GetNamed("Faerim_ProficiencyBonus"), false);
 
+			// Retrieve weapon (if applicable)
+			ThingWithComps weapon = casterPawn.equipment?.Primary;
+
 			// Roll attack against target's AC
-			int attackRoll = Mathf.RoundToInt(Rand.RangeInclusive(1, 20));
+			int attackRoll = AttackHandlers.RollAttack(casterPawn, targetPawn, weapon);
 			bool isCrit = attackRoll == 20; // Natural 20
 			attackRoll += Mathf.RoundToInt(dexterityMod + proficiencyBonus);
 			bool isHit = attackRoll > targetArmorClass || targetArmorClass == 0;
@@ -119,9 +122,6 @@ namespace Faerim_Core
 				__instance.Destroy(DestroyMode.Vanish);
 				return false;
 			}
-
-			// Retrieve weapon (if applicable)
-			ThingWithComps weapon = casterPawn.equipment?.Primary;
 
 			// Base placeholder damage to ensure ApplyToPawn gets triggered
 			float baseDamage = __instance.def.projectile.GetDamageAmount(1f);

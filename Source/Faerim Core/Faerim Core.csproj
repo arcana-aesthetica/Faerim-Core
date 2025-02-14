@@ -63,23 +63,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Apparel_Comp.cs" />
-    <Compile Include="ArmorClass.cs" />
-    <Compile Include="CharacterSheet_UI.cs" />
-    <Compile Include="ClassSystem.cs" />
-    <Compile Include="DamageHandlers.cs" />
-    <Compile Include="Faerim_Core.cs" />
-    <Compile Include="HitpointsUtility.cs" />
-    <Compile Include="MeleeAttacks.cs" />
-    <Compile Include="PawnStatGen.cs" />
+    <Compile Include="Combat\AttackHandlers.cs" />
+    <Compile Include="Components\Apparel_Comp.cs" />
+    <Compile Include="Components\Hitpoints_Comp.cs" />
+    <Compile Include="Stats\ArmorClass.cs" />
+    <Compile Include="Components\PawnStat_Comp.cs" />
+    <Compile Include="UI\CharacterSheet_UI.cs" />
+    <Compile Include="Systems\ClassSystem.cs" />
+    <Compile Include="Combat\DamageHandlers.cs" />
+    <Compile Include="Core\Faerim_Core.cs" />
+    <Compile Include="Systems\HitpointsUtility.cs" />
+    <Compile Include="Combat\MeleeAttacks.cs" />
+    <Compile Include="Stats\PawnStatGen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RangedAttacks.cs" />
-    <Compile Include="StatDefDatabase.cs" />
-    <Compile Include="DamageDice_Comp.cs" />
-    <Compile Include="Weapon_Comp.cs" />
+    <Compile Include="Combat\RangedAttacks.cs" />
+    <Compile Include="Stats\StatDefDatabase.cs" />
+    <Compile Include="Components\DamageDice_Comp.cs" />
+    <Compile Include="Components\Weapon_Comp.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

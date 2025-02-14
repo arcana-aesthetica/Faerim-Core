@@ -91,7 +91,7 @@ namespace Faerim_Core
 			float proficiencyBonus = casterPawn.GetStatValue(DefDatabase<StatDef>.GetNamed("Faerim_ProficiencyBonus"), false);
 
 			// Roll for hit determination
-			int attackRoll = Mathf.RoundToInt(Rand.RangeInclusive(1, 20));
+			int attackRoll = AttackHandlers.RollAttack(casterPawn, targetPawn, weapon);
 			bool isCrit = attackRoll == 20;
 			attackRoll += Mathf.RoundToInt(statBonus + proficiencyBonus);
 
