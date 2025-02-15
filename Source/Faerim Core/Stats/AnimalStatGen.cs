@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Verse;
 using RimWorld;
 using HarmonyLib;
-using System.Collections.Generic;
+using UnityEngine;
 
 namespace Faerim_Core
 {
@@ -24,59 +24,55 @@ namespace Faerim_Core
 
 		private static void AssignNonHumanlikeStats(Pawn pawn)
 		{
-			if (pawn.def.statBases == null)
-				pawn.def.statBases = new List<StatModifier>(); // Ensure statBases exists
+			CompPawnStats comp = pawn.TryGetComp<CompPawnStats>();
+			CompFaerimHP hpComp = pawn.TryGetComp<CompFaerimHP>();
+
+			if (comp == null)
+			{
+				Log.Warning($"[Faerim] {pawn.Label} is missing CompPawnStats!");
+				return;
+			}
+
+			if (hpComp == null)
+			{
+				Log.Warning($"[Faerim] {pawn.Label} is missing CompFaerimHP!");
+				return;
+			}
 
 			float bodySize = pawn.RaceProps.baseBodySize;
 			float wildness = pawn.RaceProps.wildness;
 			bool isPredator = pawn.RaceProps.predator;
 			float healthScale = pawn.RaceProps.baseHealthScale;
 
-			// **Assign Core Attributes Based on Pawn Traits**
-			SetStatBaseIfMissing(pawn, "Faerim_Strength", 5 + (bodySize * 4) + (isPredator ? 2 : 0));
-			SetStatBaseIfMissing(pawn, "Faerim_Dexterity", 5 + (bodySize * 2) - (wildness * 3));
-			SetStatBaseIfMissing(pawn, "Faerim_Constitution", 10 + (bodySize * 5) + (healthScale * 2));
-			SetStatBaseIfMissing(pawn, "Faerim_Wisdom", 5 + (wildness * 3));
-			SetStatBaseIfMissing(pawn, "Faerim_Intelligence", 5 + ((1 - wildness) * 4));
-			SetStatBaseIfMissing(pawn, "Faerim_Charisma", 5 + ((1 - wildness) * 3));
+			// **Assign Core Attributes Based on Pawn Traits (Now Floored)**
+			SetStatBaseIfMissing(comp, "Faerim_Strength", Mathf.FloorToInt(5 + (bodySize * 4) + (isPredator ? 2 : 0)));
+			SetStatBaseIfMissing(comp, "Faerim_Dexterity", Mathf.FloorToInt(5 + (bodySize * 2) - (wildness * 3)));
+			SetStatBaseIfMissing(comp, "Faerim_Constitution", Mathf.FloorToInt(10 + (bodySize * 5) + (healthScale * 2)));
+			SetStatBaseIfMissing(comp, "Faerim_Wisdom", Mathf.FloorToInt(5 + (wildness * 3)));
+			SetStatBaseIfMissing(comp, "Faerim_Intelligence", Mathf.FloorToInt(5 + ((1 - wildness) * 4)));
+			SetStatBaseIfMissing(comp, "Faerim_Charisma", Mathf.FloorToInt(5 + ((1 - wildness) * 3)));
 
-			// **Assign Attribute Modifiers**
-			SetStatBaseIfMissing(pawn, "Faerim_StrengthMod", (GetStatBase(pawn, "Faerim_Strength") - 10) / 2);
-			SetStatBaseIfMissing(pawn, "Faerim_DexterityMod", (GetStatBase(pawn, "Faerim_Dexterity") - 10) / 2);
-			SetStatBaseIfMissing(pawn, "Faerim_ConstitutionMod", (GetStatBase(pawn, "Faerim_Constitution") - 10) / 2);
-			SetStatBaseIfMissing(pawn, "Faerim_WisdomMod", (GetStatBase(pawn, "Faerim_Wisdom") - 10) / 2);
-			SetStatBaseIfMissing(pawn, "Faerim_IntelligenceMod", (GetStatBase(pawn, "Faerim_Intelligence") - 10) / 2);
-			SetStatBaseIfMissing(pawn, "Faerim_CharismaMod", (GetStatBase(pawn, "Faerim_Charisma") - 10) / 2);
 
 			// **Assign Combat Stats**
-			SetStatBaseIfMissing(pawn, "Faerim_PawnBaseArmorClass", 10 + (bodySize * 2) + (isPredator ? 1 : 0));
-			SetStatBaseIfMissing(pawn, "Faerim_PawnCurrentArmorClass", GetStatBase(pawn, "Faerim_PawnBaseArmorClass"));
-			SetStatBaseIfMissing(pawn, "Faerim_ProficiencyBonus", 1 + (bodySize * 0.2f) + ((1 - wildness) * 1));
+			SetStatBaseIfMissing(comp, "Faerim_PawnBaseArmorClass", 10 + (bodySize * 2) + (isPredator ? 1 : 0));
+			SetStatBaseIfMissing(comp, "Faerim_PawnCurrentArmorClass", comp.GetBaseStat("Faerim_PawnBaseArmorClass"));
+			SetStatBaseIfMissing(comp, "Faerim_ProficiencyBonus", 1 + (bodySize * 0.2f) + ((1 - wildness) * 1));
 
+			// **Force Faerim HP Recalculation AFTER Stats Are Set**
+			hpComp.faeMaxHP = FaerimHealthUtility.CalculateMaxHealth(pawn);
+			hpComp.faeHP = hpComp.faeMaxHP; // Set to full health
+
+			Log.Message($"[Faerim] {pawn.Label} assigned Faerim HP: {hpComp.faeHP}/{hpComp.faeMaxHP}");
 			Log.Message($"[Faerim] Stats assigned to {pawn.Label}");
 		}
 
-		private static void SetStatBaseIfMissing(Pawn pawn, string statDefName, float defaultValue)
+		private static void SetStatBaseIfMissing(CompPawnStats comp, string statDefName, float defaultValue)
 		{
-			StatDef stat = DefDatabase<StatDef>.GetNamedSilentFail(statDefName);
-			if (stat == null)
-				return; // StatDef not found, avoid errors.
-
-			if (!pawn.def.statBases.Exists(s => s.stat == stat)) // If the stat isn't already defined, set it
+			if (comp.GetBaseStat(statDefName) == 0f) // If the stat isn't set, assign it
 			{
-				pawn.def.statBases.Add(new StatModifier { stat = stat, value = defaultValue });
-				Log.Message($"[Faerim] Assigned default {statDefName} = {defaultValue} to {pawn.Label}");
+				comp.SetBaseStat(statDefName, defaultValue);
+				Log.Message($"[Faerim] Assigned {statDefName} = {defaultValue}");
 			}
-		}
-
-		private static float GetStatBase(Pawn pawn, string statDefName)
-		{
-			StatDef stat = DefDatabase<StatDef>.GetNamedSilentFail(statDefName);
-			if (stat == null)
-				return 0f; // If the stat isn't found, return 0.
-
-			StatModifier existingStat = pawn.def.statBases.Find(s => s.stat == stat);
-			return existingStat != null ? existingStat.value : 0f;
 		}
 	}
 }

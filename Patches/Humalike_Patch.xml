@@ -35,9 +35,6 @@
 		<xpath>/Defs/ThingDef[defName="Human"]/comps</xpath>
 		<value>
 			<li>
-				<compClass>Faerim_Core.CompPawnStats</compClass>
-			</li>
-			<li>
 				<compClass>Faerim_Core.CompClassSystem</compClass>
 			</li>
 		</value>
@@ -46,6 +43,9 @@
 	<Operation Class="PatchOperationAdd">
 		<xpath>/Defs/ThingDef[thingClass="Pawn"]/comps</xpath>
 		<value>
+			<li>
+				<compClass>Faerim_Core.CompPawnStats</compClass>
+			</li>
 			<li>
 				<compClass>Faerim_Core.CompFaerimHP</compClass>
 			</li>

@@ -28,7 +28,7 @@ namespace Faerim_Core
 				float baseValue = comp.GetBaseStat(relatedStatDefName);
 
 				// Calculate and apply modifier
-				float modifier = Mathf.FloorToInt((baseValue - 10) / 2);
+				float modifier = Mathf.FloorToInt((baseValue - 10f) / 2f);
 				val += modifier;
 			}
 		}
