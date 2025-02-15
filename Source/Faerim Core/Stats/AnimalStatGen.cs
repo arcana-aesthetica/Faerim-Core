@@ -40,23 +40,31 @@ namespace Faerim_Core
 			}
 
 			float bodySize = pawn.RaceProps.baseBodySize;
+			float healthScale = pawn.RaceProps.baseHealthScale;
 			float wildness = pawn.RaceProps.wildness;
 			bool isPredator = pawn.RaceProps.predator;
-			float healthScale = pawn.RaceProps.baseHealthScale;
+			float moveSpeed = pawn.GetStatValue(StatDefOf.MoveSpeed);
 
-			// **Assign Core Attributes Based on Pawn Traits (Now Floored)**
-			SetStatBaseIfMissing(comp, "Faerim_Strength", Mathf.FloorToInt(5 + (bodySize * 4) + (isPredator ? 2 : 0)));
-			SetStatBaseIfMissing(comp, "Faerim_Dexterity", Mathf.FloorToInt(5 + (bodySize * 2) - (wildness * 3)));
-			SetStatBaseIfMissing(comp, "Faerim_Constitution", Mathf.FloorToInt(10 + (bodySize * 5) + (healthScale * 2)));
-			SetStatBaseIfMissing(comp, "Faerim_Wisdom", Mathf.FloorToInt(5 + (wildness * 3)));
-			SetStatBaseIfMissing(comp, "Faerim_Intelligence", Mathf.FloorToInt(5 + ((1 - wildness) * 4)));
-			SetStatBaseIfMissing(comp, "Faerim_Charisma", Mathf.FloorToInt(5 + ((1 - wildness) * 3)));
+			// **Assign Core Attributes Based on Universal Scaling**
+			SetStatBaseIfMissing(comp, "Faerim_Strength", Mathf.RoundToInt(8 + (bodySize * 4) + (isPredator ? 2 : 0)));
+			SetStatBaseIfMissing(comp, "Faerim_Dexterity", Mathf.RoundToInt(10 + (moveSpeed * 1.5f) - (wildness * 3)));
+			SetStatBaseIfMissing(comp, "Faerim_Constitution", Mathf.RoundToInt(8 + (bodySize * 5) + (healthScale * 3)));
+			SetStatBaseIfMissing(comp, "Faerim_Intelligence", Mathf.RoundToInt(2 + ((1 - wildness) * 6)));
+			SetStatBaseIfMissing(comp, "Faerim_Wisdom", Mathf.RoundToInt(8 + (wildness * 6)));
+			SetStatBaseIfMissing(comp, "Faerim_Charisma", Mathf.RoundToInt(6 + ((1 - wildness) * 6)));
 
+			// **Assign Attribute Modifiers**
+			SetStatBaseIfMissing(comp, "Faerim_StrengthMod", Mathf.FloorToInt((comp.GetBaseStat("Faerim_Strength") - 10) / 2));
+			SetStatBaseIfMissing(comp, "Faerim_DexterityMod", Mathf.FloorToInt((comp.GetBaseStat("Faerim_Dexterity") - 10) / 2));
+			SetStatBaseIfMissing(comp, "Faerim_ConstitutionMod", Mathf.FloorToInt((comp.GetBaseStat("Faerim_Constitution") - 10) / 2));
+			SetStatBaseIfMissing(comp, "Faerim_WisdomMod", Mathf.FloorToInt((comp.GetBaseStat("Faerim_Wisdom") - 10) / 2));
+			SetStatBaseIfMissing(comp, "Faerim_IntelligenceMod", Mathf.FloorToInt((comp.GetBaseStat("Faerim_Intelligence") - 10) / 2));
+			SetStatBaseIfMissing(comp, "Faerim_CharismaMod", Mathf.FloorToInt((comp.GetBaseStat("Faerim_Charisma") - 10) / 2));
 
 			// **Assign Combat Stats**
-			SetStatBaseIfMissing(comp, "Faerim_PawnBaseArmorClass", 10 + (bodySize * 2) + (isPredator ? 1 : 0));
+			SetStatBaseIfMissing(comp, "Faerim_PawnBaseArmorClass", Mathf.RoundToInt(10 + (bodySize * 2) + (isPredator ? 1 : 0)));
 			SetStatBaseIfMissing(comp, "Faerim_PawnCurrentArmorClass", comp.GetBaseStat("Faerim_PawnBaseArmorClass"));
-			SetStatBaseIfMissing(comp, "Faerim_ProficiencyBonus", 1 + (bodySize * 0.2f) + ((1 - wildness) * 1));
+			SetStatBaseIfMissing(comp, "Faerim_ProficiencyBonus", Mathf.RoundToInt(1 + (bodySize * 0.2f) + ((1 - wildness) * 1)));
 
 			// **Force Faerim HP Recalculation AFTER Stats Are Set**
 			hpComp.faeMaxHP = FaerimHealthUtility.CalculateMaxHealth(pawn);
