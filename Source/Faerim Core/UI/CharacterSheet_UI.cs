@@ -15,7 +15,7 @@ namespace Faerim_Core
 	{
 		static Patch_AddFaerimStatsTab()
 		{
-			foreach (var def in DefDatabase<ThingDef>.AllDefs.Where(d => d.race?.Humanlike == true))
+			foreach (var def in DefDatabase<ThingDef>.AllDefs.Where(d => d.race != null)) // Apply to ALL pawns, not just humanlike
 			{
 				if (def.inspectorTabs == null)
 					def.inspectorTabs = new List<System.Type>();

@@ -66,6 +66,7 @@
     <Compile Include="Combat\AttackHandlers.cs" />
     <Compile Include="Components\Apparel_Comp.cs" />
     <Compile Include="Components\Hitpoints_Comp.cs" />
+    <Compile Include="Stats\AnimalStatGen.cs" />
     <Compile Include="Stats\ArmorClass.cs" />
     <Compile Include="Components\PawnStat_Comp.cs" />
     <Compile Include="UI\CharacterSheet_UI.cs" />
