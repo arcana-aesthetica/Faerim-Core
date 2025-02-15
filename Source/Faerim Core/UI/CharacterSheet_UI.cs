@@ -36,7 +36,7 @@ namespace Faerim_Core
 
 	public class ITab_Pawn_FaerimStats : ITab
 	{
-		private const float TabWidth = 500f; // Increased width to fit class names
+		private const float TabWidth = 500f;
 		private const float TabHeight = 500f;
 		private Vector2 scrollPosition = Vector2.zero;
 
@@ -53,16 +53,21 @@ namespace Faerim_Core
 			Widgets.BeginScrollView(rect, ref scrollPosition, rect);
 
 			Pawn pawn = SelPawn;
-			if (pawn == null) return;
+			if (pawn == null || pawn.Dead || pawn.Destroyed)
+			{
+				Widgets.Label(new Rect(10f, 10f, 300f, 30f), "This pawn is dead.");
+				Widgets.EndScrollView();
+				return;
+			}
 
 			float curY = 10f;
 			float statBoxSize = 60f;
 			float statBoxWidth = 90f;
 			float modBoxWidth = statBoxWidth * 0.7f;
 			float modBoxHeight = 25f;
-			float rightColumnOffset = statBoxWidth * 2 + 30f; // Adjusted offset for right-side info
+			float rightColumnOffset = statBoxWidth * 2 + 30f;
 
-			// Get pawn components
+			// Get pawn components safely
 			CompPawnStats comp = pawn.TryGetComp<CompPawnStats>();
 			CompClassSystem classComp = pawn.TryGetComp<CompClassSystem>();
 			CompFaerimHP faerimHPComp = pawn.TryGetComp<CompFaerimHP>();
@@ -87,15 +92,22 @@ namespace Faerim_Core
 			}
 
 			// Get Faerim HP values
-			float faeHP = faerimHPComp != null ? faerimHPComp.GetFaeHP() : 0f;
-			float faeMaxHP = faerimHPComp != null ? faerimHPComp.GetFaeMaxHP() : 0f;
+			float faeHP = faerimHPComp?.GetFaeHP() ?? 0f;
+			float faeMaxHP = faerimHPComp?.GetFaeMaxHP() ?? 0f;
 
-			// 🔹 Adjusted curY to align correctly
-			float leftColumnY = 10f; // Ensure left-side column starts at the same height
+			// Draw Dead Message
+			if (pawn.Dead)
+			{
+				Widgets.Label(new Rect(10f, 10f, 300f, 30f), "This pawn is dead.");
+				Widgets.EndScrollView();
+				return;
+			}
 
-			// 🔹 Draw Column Headers
+			// Draw UI elements for alive pawns
+			float leftColumnY = 10f;
 			Rect statHeaderRect = new Rect(10f, leftColumnY, statBoxWidth, 20f);
 			Widgets.Label(statHeaderRect, "Attributes");
+
 			Rect classHeaderRect = new Rect(rightColumnOffset, curY, statBoxWidth * 2, 20f);
 			Widgets.Label(classHeaderRect, "Class & XP");
 
@@ -103,42 +115,42 @@ namespace Faerim_Core
 			Widgets.DrawLineHorizontal(rightColumnOffset, curY + 18f, statBoxWidth * 2);
 			curY += 25f;
 
-			// 🔹 Draw Character Level (Above Class List)
+			// Draw Character Level
 			Rect charLevelBox = new Rect(rightColumnOffset, curY, statBoxWidth * 2, 25f);
 			Widgets.DrawHighlight(charLevelBox);
 			Widgets.Label(charLevelBox, $"Character Level: {totalLevel}");
 			curY += 30f;
 
-			// 🔹 Draw Fixed Class Names & Levels (Properly Displays Class)
+			// Draw Class Names & Levels
 			Rect classBox = new Rect(rightColumnOffset, curY, statBoxWidth * 2, 25f);
 			Widgets.DrawHighlight(classBox);
 			Widgets.Label(classBox, classDisplay);
 			curY += 30f;
 
-			// 🔹 Draw XP Stats
+			// Draw XP Stats
 			Rect totalXPBox = new Rect(rightColumnOffset, curY, statBoxWidth * 2, 25f);
 			Widgets.DrawHighlight(totalXPBox);
 			Widgets.Label(totalXPBox, $"XP: {totalXP}/{requiredXP}");
-			curY += 40f; // Extra spacing
+			curY += 40f;
 
-			// 🔹 Draw Faerim HP (Right Side, Below XP)
+			// Draw Faerim HP
 			Rect faerimHPBox = new Rect(rightColumnOffset, curY, statBoxWidth * 2, 25f);
 			Widgets.DrawHighlight(faerimHPBox);
 			Widgets.Label(faerimHPBox, $"Faerim HP: {faeHP}/{faeMaxHP}");
 			curY += 30f;
 
-			// 🔹 Reset left column to match fixed spacing
+			// Reset left column to match fixed spacing
 			curY = leftColumnY + 25f;
 
-			// 🔹 Draw Attributes Column (Left Side)
+			// Draw Attributes Column
 			foreach (var (label, baseStat, modStat) in new (string, StatDef, StatDef)[]
 			{
-		("Strength", DefDatabaseClass.Faerim_Strength, DefDatabaseClass.Faerim_StrengthMod),
-		("Dexterity", DefDatabaseClass.Faerim_Dexterity, DefDatabaseClass.Faerim_DexterityMod),
-		("Constitution", DefDatabaseClass.Faerim_Constitution, DefDatabaseClass.Faerim_ConstitutionMod),
-		("Intelligence", DefDatabaseClass.Faerim_Intelligence, DefDatabaseClass.Faerim_IntelligenceMod),
-		("Wisdom", DefDatabaseClass.Faerim_Wisdom, DefDatabaseClass.Faerim_WisdomMod),
-		("Charisma", DefDatabaseClass.Faerim_Charisma, DefDatabaseClass.Faerim_CharismaMod)
+			("Strength", DefDatabaseClass.Faerim_Strength, DefDatabaseClass.Faerim_StrengthMod),
+			("Dexterity", DefDatabaseClass.Faerim_Dexterity, DefDatabaseClass.Faerim_DexterityMod),
+			("Constitution", DefDatabaseClass.Faerim_Constitution, DefDatabaseClass.Faerim_ConstitutionMod),
+			("Intelligence", DefDatabaseClass.Faerim_Intelligence, DefDatabaseClass.Faerim_IntelligenceMod),
+			("Wisdom", DefDatabaseClass.Faerim_Wisdom, DefDatabaseClass.Faerim_WisdomMod),
+			("Charisma", DefDatabaseClass.Faerim_Charisma, DefDatabaseClass.Faerim_CharismaMod)
 			})
 			{
 				// Get values
@@ -170,6 +182,5 @@ namespace Faerim_Core
 			Text.Anchor = TextAnchor.UpperLeft;
 			Widgets.EndScrollView();
 		}
-
 	}
 }
