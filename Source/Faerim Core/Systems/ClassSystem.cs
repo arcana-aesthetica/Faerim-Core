@@ -82,12 +82,27 @@ namespace Faerim_Core
 	/// </summary>
 	public class ClassThingDef : ThingDef
 	{
-		// Custom fields from XML
 		public string classLabel;
 		public int hitDie;
-		public int level = 1;
-		public List<string> requiredAttributes = new List<string>(); // Prerequisite attributes (e.g., "Strength", "Intelligence")
-		public bool allPrerequisitesRequired = false; // If true, ALL listed attributes must be 13+
+		public List<string> requiredAttributes = new List<string>();
+		public bool allPrerequisitesRequired = false;
+
+		/// <summary>
+		/// Features granted at specific levels.
+		/// </summary>
+		public List<LevelFeatureEntry> levelFeatures = new List<LevelFeatureEntry>();
+	}
+
+	/// <summary>
+	/// Represents a feature granted at a specific level.
+	/// </summary>
+	public class LevelFeatureEntry
+	{
+		public int level;
+		public string featureName; // Name of the feature
+		public bool isActive; // If the feature is an active ability
+		public List<StatModifier> statModifiers; // Optional stat boosts
+		public List<string> abilities; // Special actions or skills
 	}
 
 	/// <summary>
@@ -195,43 +210,102 @@ namespace Faerim_Core
 				return;
 			}
 
-			// 🔹 Enforce prerequisites before allowing level-up
-			if (!CanTakeClass(classDef))
-			{
-				Log.Message($"[INFO] {parent.LabelCap} does not meet prerequisites for {classDef.label}. Level-up denied.");
-				return;
-			}
+			int newLevel = GetClassLevel(className) + amount;
+			classLevels[className] = newLevel;
 
-			if (!classLevels.ContainsKey(className))
-			{
-				classLevels[className] = 1;
-				Log.Message($"[DEBUG] {parent.LabelCap} gained new class: {classDef.label} Lv1");
+			Log.Message($"[DEBUG] {parent.LabelCap} is now {classDef.label} Lv{newLevel}");
 
-				if (className != "Commoner" && classLevels.ContainsKey("Commoner"))
-				{
-					classLevels.Remove("Commoner");
-					Log.Message($"[DEBUG] {parent.LabelCap} lost Commoner upon gaining {classDef.label}");
-				}
-			}
-			else
-			{
-				classLevels[className] += amount;
-				Log.Message($"[DEBUG] {parent.LabelCap} is now {classDef.label} Lv{classLevels[className]}");
-			}
+			// Grant features for this level
+			GrantClassFeatures(classDef, newLevel);
 
 			if (parent is Pawn pawn)
 			{
-				// 🔹 Apply HP increase directly here
+				// Apply HP increase
 				var compHP = pawn.TryGetComp<CompFaerimHP>();
 				if (compHP != null)
 				{
-					int rolledHP = FaerimTools.RollDice(1, classDef.hitDie); // Roll new hit die
-					compHP.faeMaxHP += rolledHP; // Increase max HP
-					compHP.faeHP += rolledHP; // Also increase current HP
+					int rolledHP = FaerimTools.RollDice(1, classDef.hitDie);
+					compHP.faeMaxHP += rolledHP;
+					compHP.faeHP += rolledHP;
 
 					Log.Message($"[DEBUG] {pawn.LabelCap} gained {rolledHP} HP from {classDef.label} LvUp. New HP: {compHP.faeHP}/{compHP.faeMaxHP}");
 				}
 			}
+		}
+
+		private void GrantClassFeatures(ClassThingDef classDef, int level)
+		{
+			if (classDef.levelFeatures == null)
+				return;
+
+			foreach (var entry in classDef.levelFeatures)
+			{
+				if (entry.level == level)
+				{
+					Log.Message($"[DEBUG] {parent.LabelCap} gained feature: {entry.featureName}");
+					ApplyFeatureEffects(entry);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Applies the effects of a granted feature.
+		/// </summary>
+		private void ApplyFeatureEffects(LevelFeatureEntry feature)
+		{
+			if (feature == null)
+				return;
+
+			// Ensure the parent is a pawn
+			if (!(parent is Pawn pawn))
+				return;
+
+			// Apply stat modifications (Handled by StatPart)
+			if (feature.statModifiers != null)
+			{
+				Log.Message($"[DEBUG] {pawn.LabelCap} received feature: {feature.featureName}");
+
+				foreach (var modifier in feature.statModifiers)
+				{
+					Log.Message($"[DEBUG] {pawn.LabelCap} will receive {modifier.value} to {modifier.stat.defName} via StatPart.");
+				}
+
+				// The stat changes will be automatically applied by StatPart_FaerimFeatureBonus
+			}
+
+			// Add abilities for active features
+			if (feature.isActive && feature.abilities != null)
+			{
+				Log.Message($"[DEBUG] {pawn.LabelCap} unlocked active ability: {string.Join(", ", feature.abilities)}");
+				// Ability integration can be expanded later.
+			}
+		}
+
+		public float GetFeatureStatBonus(StatDef stat)
+		{
+			float totalBonus = 0f;
+
+			foreach (var classDef in GetAllClasses())
+			{
+				if (classDef.levelFeatures == null)
+					continue;
+
+				foreach (var feature in classDef.levelFeatures)
+				{
+					if (feature.statModifiers == null)
+						continue;
+
+					foreach (var modifier in feature.statModifiers)
+					{
+						if (modifier.stat == stat)
+						{
+							totalBonus += modifier.value;
+						}
+					}
+				}
+			}
+
+			return totalBonus;
 		}
 
 

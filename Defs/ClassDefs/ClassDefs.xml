@@ -23,15 +23,34 @@
 
 	<!-- Warrior class -->
 	<ThingDef ParentName="BaseClass" Class="Faerim_Core.ClassThingDef">
-		<defName>Warrior</defName>
-		<label>Warrior</label> <!-- Change from classLabel to label -->
+		<defName>Fighter</defName>
+		<label>Fighter</label>
 		<hitDie>12</hitDie>
 		<requiredAttributes>
 			<li>Strength</li>
 			<li>Dexterity</li>
 		</requiredAttributes>
 		<allPrerequisitesRequired>false</allPrerequisitesRequired>
+		<levelFeatures>
+			<li>
+				<level>1</level>
+				<featureName>Second Wind</featureName>
+				<isActive>true</isActive>
+				<abilities>
+					<li>SecondWind_Ability</li>
+				</abilities>
+			</li>
+			<li>
+				<level>1</level>
+				<featureName>Fighting Style</featureName>
+				<isActive>false</isActive>
+				<statModifiers>
+					<Faerim_Strength>10</Faerim_Strength>
+				</statModifiers>
+			</li>
+		</levelFeatures>
 	</ThingDef>
+
 
 	<!-- Wizard class -->
 	<ThingDef ParentName="BaseClass" Class="Faerim_Core.ClassThingDef">

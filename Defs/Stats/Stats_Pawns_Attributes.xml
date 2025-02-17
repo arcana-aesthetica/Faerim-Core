@@ -15,6 +15,9 @@
     <alwaysHide>false</alwaysHide>
     <showOnPawns>true</showOnPawns>
     <defaultBaseValue>0</defaultBaseValue>
+    <parts>
+		  <li Class="Faerim_Core.StatPart_FaerimFeatureBonus" />
+	  </parts>
 </StatDef>
 
 <StatDef>
