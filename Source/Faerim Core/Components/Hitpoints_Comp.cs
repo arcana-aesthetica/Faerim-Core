@@ -12,6 +12,7 @@ namespace Faerim_Core
 	public class CompFaerimHP : ThingComp
 	{
 		public float faeHP = 10;
+		public float faeMaxHP = 10;
 		public Dictionary<string, List<int>> storedHitDice = new Dictionary<string, List<int>>();
 
 		public override void PostSpawnSetup(bool respawningAfterLoad)

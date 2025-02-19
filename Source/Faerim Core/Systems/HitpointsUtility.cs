@@ -49,25 +49,46 @@ namespace Faerim_Core
 			// Get total character level
 			int totalCharacterLevel = (int)pawn.GetStatValue(DefDatabaseClass.Faerim_TotalLevel, true);
 
-			// Fetch stored hit dice
+			// Fetch HP component
 			CompFaerimHP hpComp = pawn.TryGetComp<CompFaerimHP>();
 			if (hpComp == null) return totalHP;
 
-			foreach (var hitDice in hpComp.storedHitDice.Values)
+			// **Store old max HP separately**
+			float oldMaxHP = hpComp.faeMaxHP; // Directly accessing the stored value to avoid infinite loops
+
+			// Calculate Hit Dice HP
+			int hitDiceHP = 0;
+			foreach (var hitDice in hpComp.storedHitDice)
 			{
-				totalHP += hitDice.Sum();
+				int classTotal = hitDice.Value.Sum();
+				hitDiceHP += classTotal;
+				Log.Message($"[Faerim] {pawn.LabelCap} - Class {hitDice.Key}: {string.Join(", ", hitDice.Value)} (Total: {classTotal})");
 			}
 
 			// Apply Constitution Modifier scaling dynamically
-			totalHP += constitutionMod * (totalCharacterLevel + 1);
+			int conBonus = constitutionMod * (totalCharacterLevel + 1);
+
+			// Compute final HP
+			totalHP += hitDiceHP + conBonus;
 
 			// Prevent negative HP
-			return Mathf.Max(totalHP, 1);
-		}
+			int newMaxHP = Mathf.Max(totalHP, 1);
 
-		public static int GetConstitutionModifier(Pawn pawn)
-		{
-			return (int)pawn.GetStatValue(DefDatabaseClass.Faerim_ConstitutionMod, true);
+			// **Proportionally adjust current HP based on the change in max HP**
+			if (oldMaxHP > 0) // Prevent division by zero
+			{
+				hpComp.faeHP = Mathf.RoundToInt((hpComp.faeHP / (float)oldMaxHP) * newMaxHP);
+			}
+
+			// **Directly store the new max HP instead of using GetFaeMaxHP()**
+			hpComp.faeMaxHP = newMaxHP;
+
+			// **Debug Log Breakdown**
+			//Log.Message($"[Faerim] HP Calculation Breakdown for {pawn.LabelCap}: Base HP: {baseHP} + ((Total Levels: {totalCharacterLevel} + 1) * Constitution Modifier: {constitutionMod})): {conBonus} + HitDice: {hitDiceHP}");
+			//Log.Message($"Hitpoints adjusted: Old Max HP: {oldMaxHP} | New Max HP: {newMaxHP} | Adjusted Current HP: {hpComp.faeHP}/{newMaxHP}");
+
+			// Return new max HP
+			return newMaxHP;
 		}
 	}
 }
