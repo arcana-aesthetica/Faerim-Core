@@ -145,16 +145,16 @@ namespace Faerim_Core
 			// Draw Attributes Column
 			foreach (var (label, baseStat, modStat) in new (string, StatDef, StatDef)[]
 			{
-			("Strength", DefDatabaseClass.Faerim_Strength, DefDatabaseClass.Faerim_StrengthMod),
-			("Dexterity", DefDatabaseClass.Faerim_Dexterity, DefDatabaseClass.Faerim_DexterityMod),
-			("Constitution", DefDatabaseClass.Faerim_Constitution, DefDatabaseClass.Faerim_ConstitutionMod),
-			("Intelligence", DefDatabaseClass.Faerim_Intelligence, DefDatabaseClass.Faerim_IntelligenceMod),
-			("Wisdom", DefDatabaseClass.Faerim_Wisdom, DefDatabaseClass.Faerim_WisdomMod),
-			("Charisma", DefDatabaseClass.Faerim_Charisma, DefDatabaseClass.Faerim_CharismaMod)
+				("Strength", DefDatabaseClass.Faerim_Strength, DefDatabaseClass.Faerim_StrengthMod),
+				("Dexterity", DefDatabaseClass.Faerim_Dexterity, DefDatabaseClass.Faerim_DexterityMod),
+				("Constitution", DefDatabaseClass.Faerim_Constitution, DefDatabaseClass.Faerim_ConstitutionMod),
+				("Intelligence", DefDatabaseClass.Faerim_Intelligence, DefDatabaseClass.Faerim_IntelligenceMod),
+				("Wisdom", DefDatabaseClass.Faerim_Wisdom, DefDatabaseClass.Faerim_WisdomMod),
+				("Charisma", DefDatabaseClass.Faerim_Charisma, DefDatabaseClass.Faerim_CharismaMod)
 			})
 			{
 				// Get values
-				float baseValue = comp != null ? comp.GetBaseStat(baseStat.defName) : 0;
+				float totalValue = comp != null ? comp.GetTotalStat(baseStat.defName) : 0; // Use total value instead of base
 				float modifier = pawn.GetStatValue(modStat);
 
 				// Draw Attribute Box
@@ -165,7 +165,7 @@ namespace Faerim_Core
 				Widgets.Label(new Rect(statBox.x, curY + 5f, statBox.width, 20f), label);
 
 				Text.Anchor = TextAnchor.MiddleCenter;
-				Widgets.Label(new Rect(statBox.x, curY + 20f, statBox.width, 30f), baseValue.ToString("F0"));
+				Widgets.Label(new Rect(statBox.x, curY + 20f, statBox.width, 30f), totalValue.ToString("F0")); // Display total stat
 
 				// Draw Modifier Box
 				Rect modBox = new Rect(statBox.x + (statBox.width / 2) - (modBoxWidth / 2), curY + statBoxSize - (modBoxHeight / 2), modBoxWidth, modBoxHeight);
@@ -174,10 +174,11 @@ namespace Faerim_Core
 				Widgets.Label(modBox, modifier >= 0 ? $"+{modifier:F0}" : $"{modifier:F0}");
 
 				// Tooltip
-				TooltipHandler.TipRegion(statBox, $"Base Value: {baseValue}\nModifier: {modifier}");
+				TooltipHandler.TipRegion(statBox, $"Total Value: {totalValue}\nModifier: {modifier}");
 
 				curY += statBoxSize + modBoxHeight - 5f;
 			}
+
 
 			Text.Anchor = TextAnchor.UpperLeft;
 			Widgets.EndScrollView();

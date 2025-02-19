@@ -45,7 +45,7 @@
 				<featureName>Fighting Style</featureName>
 				<isActive>false</isActive>
 				<statModifiers>
-					<Faerim_Strength>10</Faerim_Strength>
+					<Faerim_Constitution>10</Faerim_Constitution>
 				</statModifiers>
 			</li>
 		</levelFeatures>

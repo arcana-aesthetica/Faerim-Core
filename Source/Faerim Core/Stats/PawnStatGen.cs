@@ -17,18 +17,15 @@ namespace Faerim_Core
 		{
 			if (req.HasThing && req.Thing is Pawn pawn)
 			{
-				// Get stat storage component
 				CompPawnStats comp = pawn.TryGetComp<CompPawnStats>();
 				if (comp == null) return;
 
-				// Derive related stat name (remove "Mod" suffix)
+				// Get related stat
 				string relatedStatDefName = GetRelatedStatDefName();
-
-				// Get stored base stat
-				float baseValue = comp.GetBaseStat(relatedStatDefName);
+				float totalValue = comp.GetTotalStat(relatedStatDefName); // Use total, not base
 
 				// Calculate and apply modifier
-				float modifier = Mathf.FloorToInt((baseValue - 10f) / 2f);
+				float modifier = Mathf.FloorToInt((totalValue - 10f) / 2f);
 				val += modifier;
 			}
 		}

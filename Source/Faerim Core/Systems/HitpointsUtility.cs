@@ -43,53 +43,31 @@ namespace Faerim_Core
 			int baseHP = 10;
 			int totalHP = baseHP;
 
-			// Retrieve Constitution modifier
-			int constitutionMod = GetConstitutionModifier(pawn);
+			// Get Constitution modifier dynamically
+			int constitutionMod = (int)pawn.GetStatValue(DefDatabaseClass.Faerim_ConstitutionMod, true);
 
-			// Retrieve total class levels (Pawns start at Level 0)
+			// Get total character level
 			int totalCharacterLevel = (int)pawn.GetStatValue(DefDatabaseClass.Faerim_TotalLevel, true);
 
-			// Retrieve class levels from CompClassSystem
-			CompClassSystem compClass = pawn.TryGetComp<CompClassSystem>();
+			// Fetch stored hit dice
+			CompFaerimHP hpComp = pawn.TryGetComp<CompFaerimHP>();
+			if (hpComp == null) return totalHP;
 
-			if (compClass != null)
+			foreach (var hitDice in hpComp.storedHitDice.Values)
 			{
-				foreach (ClassThingDef classDef in compClass.GetAllClasses())
-				{
-					if (classDef == null) continue;
-
-					// Get actual class level
-					int classLevel = compClass.GetClassLevel(classDef.defName);
-					int classHitDie = classDef.hitDie;
-
-					// Roll hit dice for each level in this class
-					totalHP += RollHitDie(classHitDie, classLevel);
-				}
+				totalHP += hitDice.Sum();
 			}
 
-			// Apply Constitution Modifier Scaling
+			// Apply Constitution Modifier scaling dynamically
 			totalHP += constitutionMod * (totalCharacterLevel + 1);
 
-			// Allow Constitution to lower HP but prevent zero or negative HP
-			totalHP = Mathf.Max(totalHP, 1);
-
-			return totalHP;
+			// Prevent negative HP
+			return Mathf.Max(totalHP, 1);
 		}
 
-		private static int RollHitDie(int hitDie, int levels)
-		{
-			int total = 0;
-			for (int i = 0; i < levels; i++)
-			{
-				total += FaerimTools.RollDice(1, hitDie);
-			}
-			return total;
-		}
-
-		private static int GetConstitutionModifier(Pawn pawn)
+		public static int GetConstitutionModifier(Pawn pawn)
 		{
 			return (int)pawn.GetStatValue(DefDatabaseClass.Faerim_ConstitutionMod, true);
 		}
 	}
-
 }

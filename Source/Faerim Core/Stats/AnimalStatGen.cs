@@ -67,10 +67,9 @@ namespace Faerim_Core
 			SetStatBaseIfMissing(comp, "Faerim_ProficiencyBonus", Mathf.RoundToInt(1 + (bodySize * 0.2f) + ((1 - wildness) * 1)));
 
 			// **Force Faerim HP Recalculation AFTER Stats Are Set**
-			hpComp.faeMaxHP = FaerimHealthUtility.CalculateMaxHealth(pawn);
-			hpComp.faeHP = hpComp.faeMaxHP; // Set to full health
+			hpComp.faeHP = hpComp.GetFaeMaxHP(); // Set to full health
 
-			Log.Message($"[Faerim] {pawn.Label} assigned Faerim HP: {hpComp.faeHP}/{hpComp.faeMaxHP}");
+			Log.Message($"[Faerim] {pawn.Label} assigned Faerim HP: {hpComp.faeHP}/{hpComp.GetFaeMaxHP()}");
 			Log.Message($"[Faerim] Stats assigned to {pawn.Label}");
 		}
 

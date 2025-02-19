@@ -224,14 +224,21 @@ namespace Faerim_Core
 				var compHP = pawn.TryGetComp<CompFaerimHP>();
 				if (compHP != null)
 				{
+					// Store hit die roll for the level-up
 					int rolledHP = FaerimTools.RollDice(1, classDef.hitDie);
-					compHP.faeMaxHP += rolledHP;
-					compHP.faeHP += rolledHP;
+					if (!compHP.storedHitDice.ContainsKey(className))
+					{
+						compHP.storedHitDice[className] = new List<int>();
+					}
+					compHP.storedHitDice[className].Add(rolledHP);
 
-					Log.Message($"[DEBUG] {pawn.LabelCap} gained {rolledHP} HP from {classDef.label} LvUp. New HP: {compHP.faeHP}/{compHP.faeMaxHP}");
+					// **Log HP Gain (Let FaerimHealthUtility handle updating max HP naturally)**
+					Log.Message($"[DEBUG] {pawn.LabelCap} gained {rolledHP} HP from {classDef.label} LvUp.");
 				}
 			}
 		}
+
+
 
 		private void GrantClassFeatures(ClassThingDef classDef, int level)
 		{
