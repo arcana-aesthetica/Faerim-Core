@@ -93,17 +93,29 @@ namespace Faerim_Core
 		public List<LevelFeatureEntry> levelFeatures = new List<LevelFeatureEntry>();
 	}
 
-	/// <summary>
-	/// Represents a feature granted at a specific level.
-	/// </summary>
 	public class LevelFeatureEntry
 	{
 		public int level;
 		public string featureName; // Name of the feature
 		public bool isActive; // If the feature is an active ability
-		public List<StatModifier> statModifiers; // Optional stat boosts
 		public List<string> abilities; // Special actions or skills
+		public List<StatModifier> statModifiers; // Passive stat boosts
+
+		/// <summary>
+		/// If the feature has multiple choices, they will be listed here.
+		/// </summary>
+		public List<FeatureChoice> choices;
 	}
+
+	/// <summary>
+	/// Represents a selectable choice for a feature.
+	/// </summary>
+	public class FeatureChoice
+	{
+		public string optionName; // Name of the choice (e.g., "Defense", "Archery")
+		public List<StatModifier> statModifiers; // The effects granted if chosen
+	}
+
 
 	/// <summary>
 	/// Component Properties for the Class System.
@@ -158,6 +170,22 @@ namespace Faerim_Core
 			}
 		}
 
+		private Dictionary<string, FeatureChoice> selectedFeatureChoices = new Dictionary<string, FeatureChoice>();
+
+		public void RegisterFeatureChoice(Pawn pawn, LevelFeatureEntry feature, FeatureChoice choice)
+		{
+			selectedFeatureChoices[pawn.ThingID + "_" + feature.featureName] = choice;
+			Log.Message($"[DEBUG] {pawn.LabelCap} now has {choice.optionName} for {feature.featureName}");
+		}
+
+		/// <summary>
+		/// Retrieves the chosen feature effect for a given pawn.
+		/// </summary>
+		public FeatureChoice GetSelectedFeatureChoice(Pawn pawn, string featureName)
+		{
+			selectedFeatureChoices.TryGetValue(pawn.ThingID + "_" + featureName, out FeatureChoice choice);
+			return choice;
+		}
 
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -238,8 +266,6 @@ namespace Faerim_Core
 			}
 		}
 
-
-
 		private void GrantClassFeatures(ClassThingDef classDef, int level)
 		{
 			if (classDef.levelFeatures == null)
@@ -249,9 +275,110 @@ namespace Faerim_Core
 			{
 				if (entry.level == level)
 				{
-					Log.Message($"[DEBUG] {parent.LabelCap} gained feature: {entry.featureName}");
-					ApplyFeatureEffects(entry);
+					// Check if feature has multiple choices
+					if (entry.choices != null && entry.choices.Count > 0)
+					{
+						Find.WindowStack.Add(new Dialog_FeatureChoice((Pawn)parent, entry, entry.choices, this));
+					}
+					else
+					{
+						ApplyFeatureEffects(entry);
+					}
 				}
+			}
+		}
+
+		private void OpenFeatureChoiceDialog(LevelFeatureEntry feature)
+		{
+			List<FloatMenuOption> options = new List<FloatMenuOption>();
+
+			foreach (var choice in feature.choices)
+			{
+				options.Add(new FloatMenuOption(choice.optionName, () =>
+				{
+					// Apply the selected choice
+					ApplyFeatureChoice(feature, choice);
+				}));
+			}
+
+			Find.WindowStack.Add(new FloatMenu(options));
+		}
+
+		/// <summary>
+		/// Applies the selected feature choice to the pawn.
+		/// </summary>
+		private void ApplyFeatureChoice(LevelFeatureEntry feature, FeatureChoice choice)
+		{
+			Log.Message($"[DEBUG] {parent.LabelCap} chose {choice.optionName} for {feature.featureName}");
+
+			// Apply stat modifications from the chosen feature
+			if (choice.statModifiers != null && parent is Pawn pawn)
+			{
+				foreach (var modifier in choice.statModifiers)
+				{
+					Log.Message($"[DEBUG] {pawn.LabelCap} gained {modifier.value} {modifier.stat.defName} from {choice.optionName}");
+				}
+			}
+
+			// The changes will be dynamically applied via StatPart
+		}
+
+		/// <summary>
+		/// A forced-choice popup window for selecting a class feature.
+		/// </summary>
+		public class Dialog_FeatureChoice : Window
+		{
+			private Pawn pawn;
+			private LevelFeatureEntry feature;
+			private List<FeatureChoice> choices;
+			private CompClassSystem compClassSystem;
+
+			public override Vector2 InitialSize => new Vector2(500f, 300f);
+
+			public Dialog_FeatureChoice(Pawn pawn, LevelFeatureEntry feature, List<FeatureChoice> choices, CompClassSystem compClassSystem)
+			{
+				this.pawn = pawn;
+				this.feature = feature;
+				this.choices = choices;
+				this.compClassSystem = compClassSystem;
+				this.doCloseButton = false;  // Prevents closing without choosing
+				this.absorbInputAroundWindow = true; // Blocks other interactions
+				this.forcePause = true; // Pauses game until a choice is made
+			}
+
+			public override void DoWindowContents(Rect inRect)
+			{
+				Text.Font = GameFont.Medium;
+				Widgets.Label(new Rect(0, 0, inRect.width, 35f), $"Choose a {feature.featureName} for {pawn.LabelCap}");
+
+				Text.Font = GameFont.Small;
+				float yOffset = 50f;
+				foreach (var choice in choices)
+				{
+					if (Widgets.ButtonText(new Rect(0, yOffset, inRect.width, 35f), choice.optionName))
+					{
+						ApplyFeatureChoice(choice);
+						this.Close();
+					}
+					yOffset += 40f;
+				}
+			}
+
+			private void ApplyFeatureChoice(FeatureChoice choice)
+			{
+				Log.Message($"[DEBUG] {pawn.LabelCap} chose {choice.optionName} for {feature.featureName}");
+
+				// Apply stat modifications from the chosen feature
+				if (choice.statModifiers != null)
+				{
+					foreach (var modifier in choice.statModifiers)
+					{
+						Log.Message($"[DEBUG] {pawn.LabelCap} gained {modifier.value} {modifier.stat.defName} from {choice.optionName}");
+					}
+				}
+
+				// Notify the class system so that it registers the choice
+				compClassSystem.RegisterFeatureChoice(pawn, feature, choice);
 			}
 		}
 

@@ -44,12 +44,30 @@
 				<level>1</level>
 				<featureName>Fighting Style</featureName>
 				<isActive>false</isActive>
-				<statModifiers>
-					<Faerim_Constitution>10</Faerim_Constitution>
-				</statModifiers>
+				<choices>
+					<li>
+						<optionName>Defense</optionName>
+						<statModifiers>
+							<Faerim_Constitution>1</Faerim_Constitution>
+						</statModifiers>
+					</li>
+					<li>
+						<optionName>Great Weapon Fighting</optionName>
+						<statModifiers>
+							<Faerim_Strength>1</Faerim_Strength>
+						</statModifiers>
+					</li>
+					<li>
+						<optionName>Archery</optionName>
+						<statModifiers>
+							<Faerim_Dexterity>1</Faerim_Dexterity>
+						</statModifiers>
+					</li>
+				</choices>
 			</li>
 		</levelFeatures>
 	</ThingDef>
+
 
 
 	<!-- Wizard class -->

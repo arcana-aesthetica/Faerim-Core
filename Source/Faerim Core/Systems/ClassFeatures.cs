@@ -15,17 +15,51 @@ namespace Faerim_Core
 			if (!req.HasThing || !(req.Thing is Pawn pawn) || !pawn.RaceProps.Humanlike)
 				return;
 
-			// Get class component
 			CompClassSystem compClass = pawn.TryGetComp<CompClassSystem>();
 			if (compClass == null)
 				return;
 
-			// Get total stat bonus from class features
-			float bonus = compClass.GetFeatureStatBonus(this.parentStat);
+			float bonus = 0f;
 
-			// Apply the calculated bonus
+			foreach (var classDef in compClass.GetAllClasses())
+			{
+				if (classDef.levelFeatures == null)
+					continue;
+
+				foreach (var entry in classDef.levelFeatures)
+				{
+					if (entry.choices != null && entry.choices.Count > 0)
+					{
+						// Apply the chosen option's bonus
+						FeatureChoice chosen = compClass.GetSelectedFeatureChoice(pawn, entry.featureName);
+						if (chosen != null)
+						{
+							foreach (var modifier in chosen.statModifiers)
+							{
+								if (modifier.stat == this.parentStat)
+								{
+									bonus += modifier.value;
+								}
+							}
+						}
+					}
+					else if (entry.statModifiers != null)
+					{
+						// Apply default stat modifiers
+						foreach (var modifier in entry.statModifiers)
+						{
+							if (modifier.stat == this.parentStat)
+							{
+								bonus += modifier.value;
+							}
+						}
+					}
+				}
+			}
+
 			val += bonus;
 		}
+
 
 		public override string ExplanationPart(StatRequest req)
 		{
