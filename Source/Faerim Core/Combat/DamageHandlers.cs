@@ -13,6 +13,18 @@ namespace Faerim_Core
 {
 	public static class DamageHandlers
 	{
+		public static float GetDamageScale(Pawn pawn)
+		{
+			var comp = pawn.TryGetComp<CompFaerimHP>();
+			if (comp == null) return 0;
+
+			// Estimate downing injury threshold
+			float lethalThreshold = pawn.health.LethalDamageThreshold;
+			float downingThreshold = lethalThreshold * 0.3f;
+			float damageScale = downingThreshold / comp.faeMaxHP;
+
+			return damageScale;
+		}
 		public static int ConvertDamageToDiceRoll(float originalDamage, ThingWithComps weapon, Pawn casterPawn, bool isCrit = false)
 		{
 
@@ -200,12 +212,8 @@ namespace Faerim_Core
 			float faeHP = comp.GetFaeHP();
 			float faeMaxHP = comp.GetFaeMaxHP();
 
-			// Estimate downing injury threshold
-			float lethalThreshold = pawn.health.LethalDamageThreshold;
-			float downingThreshold = lethalThreshold * 0.3f; 
-
 			// Calculate proportional injury severity
-			float damageScale = downingThreshold / faeMaxHP;
+			float damageScale = DamageHandlers.GetDamageScale(pawn);
 			float adjustedDamage = dinfo.Amount * damageScale;
 
 			// Apply Faerim HP loss

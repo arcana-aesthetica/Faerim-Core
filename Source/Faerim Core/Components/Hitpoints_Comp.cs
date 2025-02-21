@@ -13,6 +13,7 @@ namespace Faerim_Core
 	{
 		public float faeHP = 10;
 		public float faeMaxHP = 10;
+		public float faeHealed = 0;
 		public Dictionary<string, List<int>> storedHitDice = new Dictionary<string, List<int>>();
 
 		public override void PostSpawnSetup(bool respawningAfterLoad)
@@ -25,10 +26,11 @@ namespace Faerim_Core
 				return;
 			}
 
-			// Set HP to full on fresh spawn
-			if (!respawningAfterLoad)
+			// Prevent resetting HP unless it's a fresh spawn (not just going to bed)
+			if (!respawningAfterLoad && faeHP == 0)
 			{
 				faeHP = GetFaeMaxHP();
+				Log.Message($"[Faerim] {pawn.LabelShort} has spawned with full Faerim HP: {faeHP}");
 			}
 		}
 
