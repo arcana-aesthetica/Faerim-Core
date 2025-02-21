@@ -67,28 +67,29 @@ namespace Faerim_Core
 			// Apply Constitution Modifier scaling dynamically
 			int conBonus = constitutionMod * (totalCharacterLevel + 1);
 
-			// Compute final HP
+			// Compute max HP before scars
 			totalHP += hitDiceHP + conBonus;
 
-			// Prevent negative HP
-			int newMaxHP = Mathf.Max(totalHP, 1);
+			// Count permanent injuries (scars)
+			int permanentInjuries = pawn.health.hediffSet.hediffs
+				.Count(h => h.IsPermanent());
+
+			// Subtract 1 max HP per scar, ensuring it never goes below 1
+			int adjustedMaxHP = Mathf.Max(1, totalHP - permanentInjuries);
 
 			// **Proportionally adjust current HP based on the change in max HP**
 			if (oldMaxHP > 0) // Prevent division by zero
 			{
-				hpComp.faeHP = Mathf.RoundToInt((hpComp.faeHP / (float)oldMaxHP) * newMaxHP);
+				hpComp.faeHP = Mathf.RoundToInt((hpComp.faeHP / (float)oldMaxHP) * adjustedMaxHP);
 			}
 
-			// **Directly store the new max HP instead of using GetFaeMaxHP()**
-			hpComp.faeMaxHP = newMaxHP;
-
-			// **Debug Log Breakdown**
-			//Log.Message($"[Faerim] HP Calculation Breakdown for {pawn.LabelCap}: Base HP: {baseHP} + ((Total Levels: {totalCharacterLevel} + 1) * Constitution Modifier: {constitutionMod})): {conBonus} + HitDice: {hitDiceHP}");
-			//Log.Message($"Hitpoints adjusted: Old Max HP: {oldMaxHP} | New Max HP: {newMaxHP} | Adjusted Current HP: {hpComp.faeHP}/{newMaxHP}");
+			// **Directly store the new max HP**
+			hpComp.faeMaxHP = adjustedMaxHP;
 
 			// Return new max HP
-			return newMaxHP;
+			return adjustedMaxHP;
 		}
+
 
 		public static float GetTotalLostHealth(Pawn pawn)
 		{
