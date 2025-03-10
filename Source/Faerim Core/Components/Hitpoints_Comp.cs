@@ -66,8 +66,11 @@ namespace Faerim_Core
 			// If no Faerim HP was restored, exit early
 			if (restoredFaeHP <= 0) return;
 
-			// Calculate the healing ratio (percentage of Faerim Max HP restored)
-			float healingRatio = restoredFaeHP / (float)GetFaeMaxHP();
+			// Calculate the healing ratio (percentage of Faerim Max HP restored as a decimal)
+			float healingRatio = (1 / (float)GetFaeMaxHP()) * restoredFaeHP;
+
+			float damageScale = DamageHandlers.GetDamageScale(pawn);
+			float damageThreshold = damageScale * faeMaxHP;
 
 			// Find all non-permanent, healable injuries
 			List<Hediff_Injury> injuries = pawn.health.hediffSet.hediffs
@@ -79,12 +82,32 @@ namespace Faerim_Core
 			// Calculate total injury severity (to distribute healing proportionally)
 			float totalInjurySeverity = injuries.Sum(h => h.Severity);
 
-			// Apply healing to injuries proportional to the ratio
+			int numInjuries = 0;
+
 			foreach (var injury in injuries)
 			{
-				float injuryHealing = injury.Severity * healingRatio; // Apply % of the injury's severity
-				injury.Heal(injuryHealing);
+				numInjuries++;
 			}
+
+			// Apply healing to injuries proportional to the ratio
+			if (faeHP != faeMaxHP)
+			{
+				foreach (var injury in injuries)
+				{
+					float injuryHealing = (damageThreshold * healingRatio) / numInjuries; // Apply % of the injury's severity
+					injury.Heal(injuryHealing);
+				}
+			}
+			else
+			{
+				foreach (var injury in injuries)
+				{
+					injury.Heal(totalInjurySeverity);
+				}
+			}
+
+
+
 
 			// Log to verify healing applied correctly
 			Log.Message($"[Faerim] {pawn.LabelShort} actively healed {restoredFaeHP} Faerim HP. Applied {healingRatio:P} healing to injuries.");
