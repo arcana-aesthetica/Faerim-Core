@@ -5,4 +5,4 @@ Source/*.user
 Source/*.suo
 Source/*.csproj.user
 Source/*.cache
-Source/*.dll
+Assemblies/*.dll
