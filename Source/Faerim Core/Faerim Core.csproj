@@ -69,6 +69,7 @@
     <Compile Include="Stats\AnimalStatGen.cs" />
     <Compile Include="Stats\ArmorClass.cs" />
     <Compile Include="Components\PawnStat_Comp.cs" />
+    <Compile Include="Systems\ClassFeatures.cs" />
     <Compile Include="UI\CharacterSheet_UI.cs" />
     <Compile Include="Systems\ClassSystem.cs" />
     <Compile Include="Combat\DamageHandlers.cs" />
